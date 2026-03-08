@@ -14,6 +14,9 @@ import ChunkExplorer from "./pages/ChunkExplorer";
 import RetrievalTest from "./pages/RetrievalTest";
 import ActivityLogs from "./pages/ActivityLogs";
 import Settings from "./pages/Settings";
+import Models from "./pages/Models";
+import VectorStore from "./pages/VectorStore";
+import IngestionsList from "./pages/IngestionsList";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -30,14 +33,18 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/datasets" element={<Datasets />} />
+          <Route path="/datasets/new" element={<Datasets />} />
           <Route path="/datasets/:id" element={<DatasetDetails />} />
+          <Route path="/ingestions" element={<IngestionsList />} />
           <Route path="/ingestions/new" element={<NewIngestion />} />
           <Route path="/ingestions/auto" element={<AutoMode />} />
           <Route path="/ingestions/guided/*" element={<GuidedMode />} />
-          <Route path="/documents/:id" element={<DocumentDetails />} />
           <Route path="/documents" element={<DocumentDetails />} />
+          <Route path="/documents/:id" element={<DocumentDetails />} />
           <Route path="/chunks" element={<ChunkExplorer />} />
           <Route path="/retrieval" element={<RetrievalTest />} />
+          <Route path="/models" element={<Models />} />
+          <Route path="/vector-store" element={<VectorStore />} />
           <Route path="/activity" element={<ActivityLogs />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/login" element={<Login />} />
