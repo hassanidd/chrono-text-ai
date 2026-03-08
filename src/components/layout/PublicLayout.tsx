@@ -14,7 +14,7 @@ export function usePublicLayout() {
 import { useState, useEffect } from "react";
 
 const PublicLayout = () => {
-  const [hero, setHero] = useState({ title: "", subtitle: "", stats: undefined as { value: string; label: string }[] | undefined });
+  const [hero, setHero] = useState<{ title: string; subtitle: string; stats?: { value: string; label: string }[] }>({ title: "", subtitle: "" });
 
   return (
     <div className="min-h-screen bg-background flex">
