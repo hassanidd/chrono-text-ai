@@ -120,7 +120,12 @@
     "heroSubtitle": "Téléchargez, extrayez, fragmentez, intégrez et indexez vos documents dans des bases vectorielles. Créez des systèmes RAG puissants avec un contrôle total sur votre pipeline.",
     "chunksProcessed": "Fragments traités",
     "enterpriseTeams": "Équipes entreprise",
-    "uptimeSLA": "SLA de disponibilité"
+    "uptimeSLA": "SLA de disponibilité",
+    "errors": {
+      "emailRequired": "L'e-mail est requis",
+      "emailInvalid": "Veuillez entrer un e-mail valide",
+      "passwordRequired": "Le mot de passe est requis"
+    }
   },
   "common": {
     "search": "Rechercher...",
