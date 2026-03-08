@@ -17,7 +17,7 @@ const AppLayout = ({ children, title, breadcrumbs, actions }: AppLayoutProps) =>
     <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar collapsed={collapsed} onToggle={() => setCollapsed(!collapsed)} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <TopBar title={title} breadcrumbs={breadcrumbs} actions={actions} />
+        <TopBar title={title} breadcrumbs={breadcrumbs} actions={actions} sidebarCollapsed={collapsed} onToggleSidebar={() => setCollapsed(!collapsed)} />
         <main className="flex-1 overflow-y-auto">
           <motion.div
             initial={{ opacity: 0, y: 8 }}
