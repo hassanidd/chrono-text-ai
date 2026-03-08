@@ -8,19 +8,19 @@ interface ContentBadgeProps {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  text: "bg-primary/10 text-primary",
-  table: "bg-success/10 text-success",
-  ocr: "bg-warning/10 text-warning",
-  image: "bg-accent text-accent-foreground",
-  mixed: "bg-muted text-muted-foreground",
-  transcript: "bg-primary/10 text-primary",
-  default: "bg-muted text-muted-foreground",
+  text: "bg-primary/8 text-primary border-primary/15",
+  table: "bg-success/8 text-success border-success/15",
+  ocr: "bg-warning/8 text-warning border-warning/15",
+  image: "bg-accent text-accent-foreground border-accent-foreground/10",
+  mixed: "bg-muted text-muted-foreground border-border",
+  transcript: "bg-primary/8 text-primary border-primary/15",
+  default: "bg-muted text-muted-foreground border-border",
 };
 
 const ContentBadge = ({ variant, className }: ContentBadgeProps) => {
   return (
     <span className={cn(
-      "inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider",
+      "inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider border",
       variantStyles[variant],
       className
     )}>

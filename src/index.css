@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98.5%;
+    --background: 225 20% 97%;
     --foreground: 224 30% 12%;
 
     --card: 0 0% 100%;
@@ -17,6 +17,7 @@
 
     --primary: 238 70% 55%;
     --primary-foreground: 0 0% 100%;
+    --primary-glow: 238 80% 65%;
 
     --secondary: 220 14% 96%;
     --secondary-foreground: 224 30% 12%;
@@ -43,7 +44,7 @@
     --radius: 0.625rem;
 
     --sidebar-bg: 228 24% 10%;
-    --sidebar-fg: 220 14% 80%;
+    --sidebar-fg: 220 14% 55%;
     --sidebar-fg-active: 0 0% 100%;
     --sidebar-hover: 228 20% 15%;
     --sidebar-border: 228 20% 18%;
@@ -53,13 +54,18 @@
     --surface-raised: 0 0% 100%;
     --surface-sunken: 220 14% 96%;
 
-    --shadow-xs: 0 1px 2px 0 hsl(0 0% 0% / 0.04);
-    --shadow-sm: 0 1px 3px 0 hsl(0 0% 0% / 0.06), 0 1px 2px -1px hsl(0 0% 0% / 0.06);
-    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.06), 0 2px 4px -2px hsl(0 0% 0% / 0.06);
+    --shadow-xs: 0 1px 2px 0 hsl(0 0% 0% / 0.03);
+    --shadow-sm: 0 1px 3px 0 hsl(0 0% 0% / 0.04), 0 1px 2px -1px hsl(0 0% 0% / 0.04);
+    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.05), 0 2px 4px -2px hsl(0 0% 0% / 0.05);
     --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.06), 0 4px 6px -4px hsl(0 0% 0% / 0.06);
+    --shadow-glow: 0 0 20px -5px hsl(238 70% 55% / 0.15);
+
+    --gradient-primary: linear-gradient(135deg, hsl(238 70% 55%), hsl(238 80% 65%));
+    --gradient-surface: linear-gradient(180deg, hsl(0 0% 100%), hsl(220 14% 98%));
+    --gradient-sidebar: linear-gradient(180deg, hsl(228 24% 12%), hsl(228 24% 8%));
 
     --sidebar-background: 228 24% 10%;
-    --sidebar-foreground: 220 14% 80%;
+    --sidebar-foreground: 220 14% 55%;
     --sidebar-primary: 238 70% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 228 20% 15%;
@@ -77,20 +83,39 @@
     @apply bg-background text-foreground font-sans antialiased;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.3);
+  }
 }
 
 @layer components {
   .card-elevated {
-    @apply bg-card rounded-xl border shadow-sm;
+    @apply bg-card rounded-xl border shadow-sm transition-shadow duration-200;
   }
   .card-interactive {
-    @apply bg-card rounded-xl border shadow-sm transition-all duration-200 hover:shadow-md hover:border-primary/20;
+    @apply bg-card rounded-xl border shadow-sm transition-all duration-200 hover:shadow-md hover:border-primary/20 hover:-translate-y-0.5;
+  }
+  .card-glow {
+    @apply bg-card rounded-xl border shadow-sm transition-all duration-300 hover:shadow-[0_0_20px_-5px_hsl(238_70%_55%/0.15)] hover:border-primary/30;
   }
   .surface-sunken {
     @apply bg-surface-sunken rounded-xl;
   }
   .action-bar {
-    @apply sticky bottom-0 bg-card/80 backdrop-blur-lg border-t px-6 py-4 flex items-center justify-between;
+    @apply sticky bottom-0 bg-card/90 backdrop-blur-xl border-t px-6 py-4 flex items-center justify-between shadow-[0_-4px_12px_-4px_hsl(0_0%_0%/0.06)];
   }
   .page-header {
     @apply mb-8;
@@ -101,4 +126,36 @@
   .page-description {
     @apply text-sm text-muted-foreground mt-1;
   }
+  .glass-panel {
+    @apply bg-card/80 backdrop-blur-xl border rounded-xl;
+  }
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+  .btn-primary {
+    @apply px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200;
+    background: var(--gradient-primary);
+    color: hsl(var(--primary-foreground));
+    box-shadow: 0 1px 3px hsl(238 70% 55% / 0.3), 0 1px 2px hsl(238 70% 55% / 0.2);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 4px 12px hsl(238 70% 55% / 0.35), 0 2px 4px hsl(238 70% 55% / 0.2);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+  .btn-ghost {
+    @apply px-4 py-2.5 text-sm font-medium rounded-lg border transition-all duration-200 hover:bg-muted hover:border-border;
+  }
+
+  /* Staggered animations */
+  .stagger-1 { animation-delay: 0ms; }
+  .stagger-2 { animation-delay: 50ms; }
+  .stagger-3 { animation-delay: 100ms; }
+  .stagger-4 { animation-delay: 150ms; }
+  .stagger-5 { animation-delay: 200ms; }
+  .stagger-6 { animation-delay: 250ms; }
+  .stagger-7 { animation-delay: 300ms; }
 }
