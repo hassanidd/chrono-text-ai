@@ -55,7 +55,7 @@ const Dashboard = () => {
         <MetricCard icon={HardDrive} label="Vector Store" value="Healthy" change="Pinecone · 89K vectors" changeType="positive" delay={0.3} />
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Ingestions */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
