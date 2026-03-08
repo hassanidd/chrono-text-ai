@@ -1,15 +1,21 @@
 import { Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
+import { Outlet, useOutletContext } from "react-router-dom";
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 
-interface PublicLayoutProps {
-  children: React.ReactNode;
-  heroTitle: string;
-  heroSubtitle: string;
-  stats?: { value: string; label: string }[];
+interface PublicLayoutContext {
+  setHero: (hero: { title: string; subtitle: string; stats?: { value: string; label: string }[] }) => void;
 }
 
-const PublicLayout = ({ children, heroTitle, heroSubtitle, stats }: PublicLayoutProps) => {
+export function usePublicLayout() {
+  return useOutletContext<PublicLayoutContext>();
+}
+
+import { useState, useEffect } from "react";
+
+const PublicLayout = () => {
+  const [hero, setHero] = useState({ title: "", subtitle: "", stats: undefined as { value: string; label: string }[] | undefined });
+
   return (
     <div className="min-h-screen bg-background flex">
       {/* Left Panel */}
@@ -32,14 +38,14 @@ const PublicLayout = ({ children, heroTitle, heroSubtitle, stats }: PublicLayout
           className="relative z-10"
         >
           <h1 className="text-4xl font-bold text-sidebar-fg-active mb-4 leading-tight whitespace-pre-line">
-            {heroTitle}
+            {hero.title}
           </h1>
           <p className="text-sidebar-fg text-sm leading-relaxed max-w-md">
-            {heroSubtitle}
+            {hero.subtitle}
           </p>
-          {stats && stats.length > 0 && (
+          {hero.stats && hero.stats.length > 0 && (
             <div className="flex items-center gap-8 mt-8">
-              {stats.map((s, i) => (
+              {hero.stats.map((s, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 10 }}
@@ -74,7 +80,7 @@ const PublicLayout = ({ children, heroTitle, heroSubtitle, stats }: PublicLayout
             </div>
             <span className="text-lg font-bold">VectorFlow</span>
           </div>
-          {children}
+          <Outlet context={{ setHero } satisfies PublicLayoutContext} />
         </motion.div>
       </div>
     </div>

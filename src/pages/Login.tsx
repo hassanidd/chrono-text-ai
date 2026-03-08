@@ -1,24 +1,29 @@
 import { Mail, Lock, ArrowRight, Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import PublicLayout from "@/components/layout/PublicLayout";
+import { usePublicLayout } from "@/components/layout/PublicLayout";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { setHero } = usePublicLayout();
 
-  return (
-    <PublicLayout
-      heroTitle={t("login.heroTitle")}
-      heroSubtitle={t("login.heroSubtitle")}
-      stats={[
+  useEffect(() => {
+    setHero({
+      title: t("login.heroTitle"),
+      subtitle: t("login.heroSubtitle"),
+      stats: [
         { value: "10M+", label: t("login.chunksProcessed") },
         { value: "500+", label: t("login.enterpriseTeams") },
         { value: "99.9%", label: t("login.uptimeSLA") },
-      ]}
-    >
+      ],
+    });
+  }, [t, setHero]);
+
+  return (
+    <>
       <h2 className="text-2xl font-bold mb-1">{t("login.welcomeBack")}</h2>
       <p className="text-sm text-muted-foreground mb-8">{t("login.signInToAccount")}</p>
 
@@ -75,7 +80,7 @@ const Login = () => {
           {t("login.noAccount")} <Link to="/signup" className="text-primary font-semibold hover:underline">{t("login.signUp")}</Link>
         </p>
       </div>
-    </PublicLayout>
+    </>
   );
 };
 
