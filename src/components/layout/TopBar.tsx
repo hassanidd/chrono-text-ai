@@ -1,16 +1,26 @@
-import { Search, Bell, ChevronRight, Command } from "lucide-react";
+import { Search, Bell, ChevronRight, Command, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface TopBarProps {
   title: string;
   breadcrumbs?: { label: string; href?: string }[];
   actions?: React.ReactNode;
+  sidebarCollapsed?: boolean;
+  onToggleSidebar?: () => void;
 }
 
-const TopBar = ({ title, breadcrumbs, actions }: TopBarProps) => {
+const TopBar = ({ title, breadcrumbs, actions, sidebarCollapsed, onToggleSidebar }: TopBarProps) => {
   return (
     <header className="h-14 min-h-[3.5rem] bg-card/80 backdrop-blur-xl border-b flex items-center justify-between px-6 sticky top-0 z-30">
       <div className="flex items-center gap-3">
+        {onToggleSidebar && (
+          <button
+            onClick={onToggleSidebar}
+            className="p-1.5 rounded-lg hover:bg-muted transition-colors duration-150 text-muted-foreground hover:text-foreground"
+          >
+            {sidebarCollapsed ? <PanelLeftOpen className="w-4 h-4" /> : <PanelLeftClose className="w-4 h-4" />}
+          </button>
+        )}
         {breadcrumbs && breadcrumbs.length > 0 && (
           <motion.div
             initial={{ opacity: 0, x: -8 }}

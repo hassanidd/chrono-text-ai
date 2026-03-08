@@ -143,18 +143,6 @@ const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
           {!collapsed && <span className="text-[13px] font-medium">Settings</span>}
         </button>
 
-        <button
-          onClick={onToggle}
-          className={`
-            w-full flex items-center rounded-lg transition-colors duration-150 text-sidebar-fg/40 hover:text-sidebar-fg hover:bg-sidebar-hover/40
-            ${collapsed ? "h-9 w-9 mx-auto justify-center" : "h-8 px-2.5 gap-2.5"}
-          `}
-        >
-          {collapsed
-            ? <ChevronsRight className="w-4 h-4" />
-            : <><ChevronsLeft className="w-4 h-4 flex-shrink-0" /><span className="text-[13px]">Collapse</span></>
-          }
-        </button>
       </div>
     </motion.aside>
   );
