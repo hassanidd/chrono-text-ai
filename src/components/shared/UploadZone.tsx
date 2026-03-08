@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Upload, FileText, CheckCircle2 } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface UploadZoneProps {
@@ -12,19 +12,30 @@ interface UploadZoneProps {
 const UploadZone = ({ onFileSelect, className, acceptedTypes }: UploadZoneProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    const files = Array.from(e.dataTransfer.files);
+  const handleFiles = (files: File[]) => {
     if (files.length > 0) {
       setSelectedFile(files[0]);
       onFileSelect?.(files);
     }
   };
 
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    handleFiles(Array.from(e.dataTransfer.files));
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      handleFiles(Array.from(e.target.files));
+    }
+  };
+
   return (
     <motion.div
+      onClick={() => !selectedFile && inputRef.current?.click()}
       onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
       onDragLeave={() => setIsDragging(false)}
       onDrop={handleDrop}
@@ -38,6 +49,13 @@ const UploadZone = ({ onFileSelect, className, acceptedTypes }: UploadZoneProps)
         className
       )}
     >
+      <input
+        ref={inputRef}
+        type="file"
+        className="hidden"
+        accept={acceptedTypes || ".pdf,.docx,.txt,.csv,.json,.html,.md,.pptx,.xlsx"}
+        onChange={handleInputChange}
+      />
       <AnimatePresence mode="wait">
         {selectedFile ? (
           <motion.div
@@ -57,7 +75,11 @@ const UploadZone = ({ onFileSelect, className, acceptedTypes }: UploadZoneProps)
               </p>
             </div>
             <button
-              onClick={(e) => { e.stopPropagation(); setSelectedFile(null); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedFile(null);
+                if (inputRef.current) inputRef.current.value = "";
+              }}
               className="text-xs text-destructive hover:underline"
             >
               Remove file
@@ -82,7 +104,7 @@ const UploadZone = ({ onFileSelect, className, acceptedTypes }: UploadZoneProps)
                 Drop your file here, or <span className="text-primary hover:underline">browse</span>
               </p>
               <p className="text-xs text-muted-foreground mt-1.5">
-                {acceptedTypes || "PDF, DOCX, TXT, CSV, JSON, HTML, MD, PPTX, XLSX"}
+                PDF, DOCX, TXT, CSV, JSON, HTML, MD, PPTX, XLSX
               </p>
               <p className="text-xs text-muted-foreground mt-0.5">
                 Max file size: 50 MB
