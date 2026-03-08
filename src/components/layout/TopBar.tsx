@@ -1,6 +1,7 @@
 import { Search, Bell, ChevronRight, Command, PanelLeftClose, PanelLeftOpen, Menu } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 
 interface TopBarProps {
@@ -14,7 +15,7 @@ interface TopBarProps {
 
 const TopBar = ({ title, breadcrumbs, actions, sidebarCollapsed, onToggleSidebar, isMobile }: TopBarProps) => {
   const { t } = useTranslation();
-
+  const navigate = useNavigate();
   return (
     <header className="h-14 min-h-[3.5rem] bg-card/80 backdrop-blur-xl border-b flex items-center justify-between px-4 md:px-6 sticky top-0 z-30">
       <div className="flex items-center gap-3 min-w-0">
@@ -42,7 +43,10 @@ const TopBar = ({ title, breadcrumbs, actions, sidebarCollapsed, onToggleSidebar
             {breadcrumbs.map((crumb, i) => (
               <span key={i} className="flex items-center gap-1.5 min-w-0">
                 {i > 0 && <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/50 flex-shrink-0" />}
-                <span className={`transition-colors duration-200 truncate ${i === breadcrumbs.length - 1 ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground cursor-pointer"}`}>
+                <span
+                  onClick={() => crumb.href && navigate(crumb.href)}
+                  className={`transition-colors duration-200 truncate ${i === breadcrumbs.length - 1 ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground cursor-pointer"}`}
+                >
                   {crumb.label}
                 </span>
               </span>
