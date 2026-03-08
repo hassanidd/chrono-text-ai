@@ -51,13 +51,6 @@ const DocumentDetails = () => {
     <AppLayout
       title="Document"
       breadcrumbs={[{ label: "Documents" }, { label: "Q4-Report.pdf" }]}
-      actions={
-        <div className="flex items-center gap-2">
-          <button className="flex items-center gap-2 px-3 py-2 border text-sm font-medium rounded-lg hover:bg-muted">
-            <RefreshCw className="w-3.5 h-3.5" /> Re-embed
-          </button>
-        </div>
-      }
     >
       {/* Header */}
       <div className="card-elevated p-6 mb-6">
