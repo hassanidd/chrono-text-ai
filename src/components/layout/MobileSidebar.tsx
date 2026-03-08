@@ -4,18 +4,19 @@ import {
   Activity, Settings, Plus
 } from "lucide-react";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { useTranslation } from "react-i18next";
 
 const navItems = [
-  { icon: LayoutDashboard, label: "Dashboard", path: "/" },
-  { icon: Database, label: "Datasets", path: "/datasets" },
-  { icon: FileText, label: "Documents", path: "/documents" },
+  { icon: LayoutDashboard, labelKey: "nav.dashboard", path: "/" },
+  { icon: Database, labelKey: "nav.datasets", path: "/datasets" },
+  { icon: FileText, labelKey: "nav.documents", path: "/documents" },
   { type: "divider" as const },
-  { icon: Zap, label: "Ingestions", path: "/ingestions", badge: 3 },
-  { icon: Search, label: "Retrieval", path: "/retrieval" },
+  { icon: Zap, labelKey: "nav.ingestions", path: "/ingestions", badge: 3 },
+  { icon: Search, labelKey: "nav.retrieval", path: "/retrieval" },
   { type: "divider" as const },
-  { icon: Cpu, label: "Models", path: "/models" },
-  { icon: HardDrive, label: "Vectors", path: "/vector-store" },
-  { icon: Activity, label: "Activity", path: "/activity" },
+  { icon: Cpu, labelKey: "nav.models", path: "/models" },
+  { icon: HardDrive, labelKey: "nav.vectors", path: "/vector-store" },
+  { icon: Activity, labelKey: "nav.activity", path: "/activity" },
 ] as const;
 
 interface MobileSidebarProps {
@@ -26,6 +27,7 @@ interface MobileSidebarProps {
 const MobileSidebar = ({ open, onOpenChange }: MobileSidebarProps) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const isActive = (path: string) =>
     location.pathname === path || (path !== "/" && location.pathname.startsWith(path));
@@ -62,7 +64,7 @@ const MobileSidebar = ({ open, onOpenChange }: MobileSidebarProps) => {
             }}
           >
             <Plus className="w-3.5 h-3.5 flex-shrink-0" />
-            <span>New Ingestion</span>
+            <span>{t("nav.newIngestion")}</span>
           </button>
         </div>
 
@@ -92,7 +94,7 @@ const MobileSidebar = ({ open, onOpenChange }: MobileSidebarProps) => {
                   <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-4 rounded-r-full bg-primary" />
                 )}
                 <Icon className={`w-4 h-4 flex-shrink-0 ${active ? "text-primary" : ""}`} strokeWidth={active ? 2 : 1.6} />
-                <span className="text-[13px] font-medium truncate">{item.label}</span>
+                <span className="text-[13px] font-medium truncate">{t(item.labelKey)}</span>
                 {"badge" in item && item.badge && (
                   <span className="ml-auto text-[10px] font-bold bg-primary text-primary-foreground rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
                     {item.badge}
@@ -116,7 +118,7 @@ const MobileSidebar = ({ open, onOpenChange }: MobileSidebarProps) => {
             `}
           >
             <Settings className={`w-4 h-4 flex-shrink-0 ${isActive("/settings") ? "text-primary" : ""}`} strokeWidth={isActive("/settings") ? 2 : 1.6} />
-            <span className="text-[13px] font-medium">Settings</span>
+            <span className="text-[13px] font-medium">{t("nav.settings")}</span>
           </button>
         </div>
       </SheetContent>

@@ -4,6 +4,7 @@ import { Plus, Search, LayoutGrid, List, Database, MoreHorizontal } from "lucide
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const datasets = [
   { id: "1", name: "Financial Reports", description: "Quarterly and annual financial documents", owner: "John D.", visibility: "Private", docs: 234, chunks: 12840, created: "Jan 15, 2026", tags: ["finance", "reports"], status: "active" as const },
@@ -17,32 +18,32 @@ const datasets = [
 const Datasets = () => {
   const [view, setView] = useState<"grid" | "table">("grid");
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <AppLayout
-      title="Datasets"
-      breadcrumbs={[{ label: "Datasets" }]}
+      title={t("datasets.title")}
+      breadcrumbs={[{ label: t("datasets.title") }]}
       actions={
         <button
           onClick={() => navigate("/datasets/new")}
           className="btn-primary flex items-center gap-2"
         >
-          <Plus className="w-4 h-4" /> Create Dataset
+          <Plus className="w-4 h-4" /> {t("datasets.createDataset")}
         </button>
       }
     >
       <div className="page-header flex items-end justify-between">
         <div>
-          <h1 className="page-title">Datasets</h1>
-          <p className="page-description">Manage your document collections and knowledge bases</p>
+          <h1 className="page-title">{t("datasets.title")}</h1>
+          <p className="page-description">{t("datasets.subtitle")}</p>
         </div>
       </div>
 
-      {/* Toolbar */}
       <div className="flex items-center gap-3 mb-6">
         <div className="flex items-center gap-2 px-3 py-2 bg-card border rounded-xl flex-1 max-w-md focus-within:border-primary/30 focus-within:shadow-glow transition-all duration-200">
           <Search className="w-4 h-4 text-muted-foreground" />
-          <input type="text" placeholder="Search datasets..." className="bg-transparent text-sm outline-none flex-1 placeholder:text-muted-foreground" />
+          <input type="text" placeholder={t("datasets.searchDatasets")} className="bg-transparent text-sm outline-none flex-1 placeholder:text-muted-foreground" />
         </div>
         <div className="flex items-center border rounded-xl overflow-hidden bg-card">
           <button onClick={() => setView("grid")} className={`p-2.5 transition-colors ${view === "grid" ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:text-foreground"}`}>
@@ -82,12 +83,12 @@ const Datasets = () => {
               </div>
               <div className="flex items-center justify-between pt-3 border-t">
                 <div className="flex items-center gap-3">
-                  <span className="text-xs text-muted-foreground">{ds.docs} docs</span>
-                  <span className="text-xs text-muted-foreground">{ds.chunks.toLocaleString()} chunks</span>
+                  <span className="text-xs text-muted-foreground">{ds.docs} {t("dashboard.docs")}</span>
+                  <span className="text-xs text-muted-foreground">{ds.chunks.toLocaleString()} {t("dashboard.chunks").toLowerCase()}</span>
                 </div>
                 <StatusPill
                   status={ds.status === "active" ? "success" : "processing"}
-                  label={ds.status === "active" ? "Active" : "Processing"}
+                  label={ds.status === "active" ? t("datasets.active") : t("datasets.processing")}
                   pulse={ds.status === "processing"}
                 />
               </div>
@@ -103,13 +104,13 @@ const Datasets = () => {
           <table className="w-full min-w-[700px]">
             <thead>
               <tr className="border-b bg-muted/50">
-                <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-5 py-3">Name</th>
-                <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-5 py-3">Owner</th>
-                <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-5 py-3">Visibility</th>
-                <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-5 py-3">Documents</th>
-                <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-5 py-3">Chunks</th>
-                <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-5 py-3">Status</th>
-                <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-5 py-3">Created</th>
+                <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-5 py-3">{t("datasets.name")}</th>
+                <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-5 py-3">{t("datasets.owner")}</th>
+                <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-5 py-3">{t("datasets.visibility")}</th>
+                <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-5 py-3">{t("datasets.documentsCol")}</th>
+                <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-5 py-3">{t("datasets.chunksCol")}</th>
+                <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-5 py-3">{t("datasets.status")}</th>
+                <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-5 py-3">{t("datasets.created")}</th>
               </tr>
             </thead>
             <tbody className="divide-y">
@@ -126,7 +127,7 @@ const Datasets = () => {
                   <td className="px-5 py-3.5 text-sm font-mono">{ds.docs}</td>
                   <td className="px-5 py-3.5 text-sm font-mono">{ds.chunks.toLocaleString()}</td>
                   <td className="px-5 py-3.5">
-                    <StatusPill status={ds.status === "active" ? "success" : "processing"} label={ds.status === "active" ? "Active" : "Processing"} />
+                    <StatusPill status={ds.status === "active" ? "success" : "processing"} label={ds.status === "active" ? t("datasets.active") : t("datasets.processing")} />
                   </td>
                   <td className="px-5 py-3.5 text-sm text-muted-foreground">{ds.created}</td>
                 </tr>

@@ -1,21 +1,22 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard, Database, FileText, Zap, Search, Cpu, HardDrive,
-  Activity, Settings, Plus, ChevronsLeft, ChevronsRight
+  Activity, Settings, Plus
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const navItems = [
-  { icon: LayoutDashboard, label: "Dashboard", path: "/" },
-  { icon: Database, label: "Datasets", path: "/datasets" },
-  { icon: FileText, label: "Documents", path: "/documents" },
+  { icon: LayoutDashboard, labelKey: "nav.dashboard", path: "/" },
+  { icon: Database, labelKey: "nav.datasets", path: "/datasets" },
+  { icon: FileText, labelKey: "nav.documents", path: "/documents" },
   { type: "divider" as const },
-  { icon: Zap, label: "Ingestions", path: "/ingestions", badge: 3 },
-  { icon: Search, label: "Retrieval", path: "/retrieval" },
+  { icon: Zap, labelKey: "nav.ingestions", path: "/ingestions", badge: 3 },
+  { icon: Search, labelKey: "nav.retrieval", path: "/retrieval" },
   { type: "divider" as const },
-  { icon: Cpu, label: "Models", path: "/models" },
-  { icon: HardDrive, label: "Vectors", path: "/vector-store" },
-  { icon: Activity, label: "Activity", path: "/activity" },
+  { icon: Cpu, labelKey: "nav.models", path: "/models" },
+  { icon: HardDrive, labelKey: "nav.vectors", path: "/vector-store" },
+  { icon: Activity, labelKey: "nav.activity", path: "/activity" },
 ] as const;
 
 interface SidebarProps {
@@ -26,6 +27,7 @@ interface SidebarProps {
 const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const isActive = (path: string) =>
     location.pathname === path || (path !== "/" && location.pathname.startsWith(path));
@@ -72,7 +74,7 @@ const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
           }}
         >
           <Plus className="w-3.5 h-3.5 flex-shrink-0" />
-          {!collapsed && <span>New Ingestion</span>}
+          {!collapsed && <span>{t("nav.newIngestion")}</span>}
         </button>
       </div>
 
@@ -111,7 +113,7 @@ const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
               )}
               <Icon className={`w-4 h-4 flex-shrink-0 ${active ? "text-primary" : ""}`} strokeWidth={active ? 2 : 1.6} />
               {!collapsed && (
-                <span className="text-[13px] font-medium truncate">{item.label}</span>
+                <span className="text-[13px] font-medium truncate">{t(item.labelKey)}</span>
               )}
               {!collapsed && "badge" in item && item.badge && (
                 <span className="ml-auto text-[10px] font-bold bg-primary text-primary-foreground rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
@@ -140,9 +142,8 @@ const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
           `}
         >
           <Settings className={`w-4 h-4 flex-shrink-0 ${isActive("/settings") ? "text-primary" : ""}`} strokeWidth={isActive("/settings") ? 2 : 1.6} />
-          {!collapsed && <span className="text-[13px] font-medium">Settings</span>}
+          {!collapsed && <span className="text-[13px] font-medium">{t("nav.settings")}</span>}
         </button>
-
       </div>
     </motion.aside>
   );

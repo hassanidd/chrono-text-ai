@@ -2,16 +2,18 @@ import { Sparkles, Mail, Lock, ArrowRight, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className="min-h-screen bg-background flex">
       {/* Left Panel */}
       <div className="hidden lg:flex w-1/2 relative overflow-hidden flex-col justify-between p-12" style={{ background: "var(--gradient-sidebar)" }}>
-        {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-primary/5 blur-3xl" />
         <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-primary/5 blur-3xl" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-sidebar-border/30" />
@@ -29,22 +31,20 @@ const Login = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="relative z-10"
         >
-          <h1 className="text-4xl font-bold text-sidebar-fg-active mb-4 leading-tight">
-            AI-powered document<br />ingestion for enterprise<br />knowledge
+          <h1 className="text-4xl font-bold text-sidebar-fg-active mb-4 leading-tight whitespace-pre-line">
+            {t("login.heroTitle")}
           </h1>
           <p className="text-sidebar-fg text-sm leading-relaxed max-w-md">
-            Upload, extract, chunk, embed, and index your documents into vector databases.
-            Build powerful RAG systems with full control over your ingestion pipeline.
+            {t("login.heroSubtitle")}
           </p>
-          {/* Stats */}
           <div className="flex items-center gap-8 mt-8">
             {[
-              { value: "10M+", label: "Chunks processed" },
-              { value: "500+", label: "Enterprise teams" },
-              { value: "99.9%", label: "Uptime SLA" },
+              { value: "10M+", label: t("login.chunksProcessed") },
+              { value: "500+", label: t("login.enterpriseTeams") },
+              { value: "99.9%", label: t("login.uptimeSLA") },
             ].map((s, i) => (
               <motion.div
-                key={s.label}
+                key={i}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
@@ -59,7 +59,12 @@ const Login = () => {
       </div>
 
       {/* Right Panel */}
-      <div className="flex-1 flex items-center justify-center p-8">
+      <div className="flex-1 flex items-center justify-center p-8 relative">
+        {/* Language switcher */}
+        <div className="absolute top-4 right-4">
+          <LanguageSwitcher />
+        </div>
+
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -73,19 +78,19 @@ const Login = () => {
             <span className="text-lg font-bold">VectorFlow</span>
           </div>
 
-          <h2 className="text-2xl font-bold mb-1">Welcome back</h2>
-          <p className="text-sm text-muted-foreground mb-8">Sign in to your account</p>
+          <h2 className="text-2xl font-bold mb-1">{t("login.welcomeBack")}</h2>
+          <p className="text-sm text-muted-foreground mb-8">{t("login.signInToAccount")}</p>
 
           <div className="space-y-4">
             <div>
-              <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Email</label>
+              <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">{t("login.email")}</label>
               <div className="flex items-center gap-2 px-4 py-2.5 bg-muted rounded-xl border border-transparent focus-within:border-primary/30 focus-within:shadow-glow transition-all duration-200">
                 <Mail className="w-4 h-4 text-muted-foreground" />
                 <input type="email" placeholder="you@company.com" className="bg-transparent text-sm outline-none flex-1 placeholder:text-muted-foreground" />
               </div>
             </div>
             <div>
-              <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">Password</label>
+              <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">{t("login.password")}</label>
               <div className="flex items-center gap-2 px-4 py-2.5 bg-muted rounded-xl border border-transparent focus-within:border-primary/30 focus-within:shadow-glow transition-all duration-200">
                 <Lock className="w-4 h-4 text-muted-foreground" />
                 <input type={showPassword ? "text" : "password"} placeholder="••••••••" className="bg-transparent text-sm outline-none flex-1 placeholder:text-muted-foreground" />
@@ -98,19 +103,19 @@ const Login = () => {
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2 text-xs cursor-pointer">
                 <input type="checkbox" className="rounded border-border" />
-                <span className="text-muted-foreground">Remember me</span>
+                <span className="text-muted-foreground">{t("login.rememberMe")}</span>
               </label>
-              <Link to="/forgot-password" className="text-xs text-primary font-medium hover:underline">Forgot password?</Link>
+              <Link to="/forgot-password" className="text-xs text-primary font-medium hover:underline">{t("login.forgotPassword")}</Link>
             </div>
 
             <button onClick={() => navigate("/")} className="btn-primary w-full flex items-center justify-center gap-2 !py-3 !rounded-xl">
-              Sign In <ArrowRight className="w-4 h-4" />
+              {t("login.signIn")} <ArrowRight className="w-4 h-4" />
             </button>
 
             <div className="relative my-6">
               <div className="absolute inset-0 flex items-center"><div className="w-full border-t" /></div>
               <div className="relative flex justify-center">
-                <span className="bg-background px-3 text-xs text-muted-foreground">or continue with</span>
+                <span className="bg-background px-3 text-xs text-muted-foreground">{t("login.orContinueWith")}</span>
               </div>
             </div>
 
@@ -126,7 +131,7 @@ const Login = () => {
             </div>
 
             <p className="text-xs text-center text-muted-foreground pt-2">
-              Don't have an account? <Link to="/signup" className="text-primary font-semibold hover:underline">Sign up</Link>
+              {t("login.noAccount")} <Link to="/signup" className="text-primary font-semibold hover:underline">{t("login.signUp")}</Link>
             </p>
           </div>
         </motion.div>
