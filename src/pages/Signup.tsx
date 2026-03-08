@@ -112,7 +112,7 @@ const Signup = () => {
     if (Object.keys(touched).length > 0) {
       setErrors(validate());
     }
-  }, [name, email, password, agreedTerms, touched, validate]);
+  }, [name, email, password, confirmPassword, agreedTerms, touched, validate]);
 
   const handleBlur = (field: string) => {
     setTouched((prev) => ({ ...prev, [field]: true }));
