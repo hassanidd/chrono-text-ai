@@ -119,7 +119,7 @@ const Signup = () => {
   };
 
   const handleSubmit = () => {
-    setTouched({ name: true, email: true, password: true, terms: true });
+    setTouched({ name: true, email: true, password: true, confirmPassword: true, terms: true });
     const errs = validate();
     setErrors(errs);
     if (Object.keys(errs).length === 0) {
