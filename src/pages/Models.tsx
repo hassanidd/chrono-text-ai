@@ -1,6 +1,7 @@
 import AppLayout from "@/components/layout/AppLayout";
 import StatusPill from "@/components/shared/StatusPill";
-import { Cpu, CheckCircle2, ExternalLink } from "lucide-react";
+import { Cpu } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const models = [
   { name: "text-embedding-3-large", provider: "OpenAI", dims: 3072, maxTokens: 8191, status: "active" as const, isDefault: true },
@@ -12,11 +13,13 @@ const models = [
 ];
 
 const Models = () => {
+  const { t } = useTranslation();
+
   return (
-    <AppLayout title="Models" breadcrumbs={[{ label: "Models" }]}>
+    <AppLayout title={t("models.title")} breadcrumbs={[{ label: t("models.title") }]}>
       <div className="page-header">
-        <h1 className="page-title">Models</h1>
-        <p className="page-description">Manage embedding models available for ingestion pipelines</p>
+        <h1 className="page-title">{t("models.title")}</h1>
+        <p className="page-description">{t("models.subtitle")}</p>
       </div>
 
       <div className="grid grid-cols-3 gap-4 mb-6">
@@ -26,39 +29,39 @@ const Models = () => {
               <Cpu className="w-5 h-5 text-accent-foreground" />
             </div>
             <div>
-              <p className="text-sm font-semibold">Active Model</p>
+              <p className="text-sm font-semibold">{t("models.activeModel")}</p>
               <p className="text-xs text-muted-foreground">text-embedding-3-large</p>
             </div>
           </div>
           <div className="text-xs text-muted-foreground mt-3 space-y-1">
-            <div className="flex justify-between"><span>Dimensions</span><span className="font-medium text-foreground">3,072</span></div>
-            <div className="flex justify-between"><span>Max Tokens</span><span className="font-medium text-foreground">8,191</span></div>
+            <div className="flex justify-between"><span>{t("models.dimensions")}</span><span className="font-medium text-foreground">3,072</span></div>
+            <div className="flex justify-between"><span>{t("models.maxTokens")}</span><span className="font-medium text-foreground">8,191</span></div>
           </div>
         </div>
         <div className="card-elevated p-5 text-center">
           <p className="text-2xl font-bold">89,412</p>
-          <p className="text-xs text-muted-foreground">Total Embeddings Generated</p>
-          <p className="text-xs text-success mt-1">+4,230 this week</p>
+          <p className="text-xs text-muted-foreground">{t("models.totalEmbeddings")}</p>
+          <p className="text-xs text-success mt-1">+4,230 {t("dashboard.thisWeek")}</p>
         </div>
         <div className="card-elevated p-5 text-center">
           <p className="text-2xl font-bold">6</p>
-          <p className="text-xs text-muted-foreground">Available Models</p>
-          <p className="text-xs text-muted-foreground mt-1">5 active · 1 inactive</p>
+          <p className="text-xs text-muted-foreground">{t("models.availableModels")}</p>
+          <p className="text-xs text-muted-foreground mt-1">5 {t("models.active").toLowerCase()} · 1 {t("models.inactive").toLowerCase()}</p>
         </div>
       </div>
 
       <div className="card-elevated overflow-hidden">
         <div className="p-5 border-b">
-          <h2 className="text-sm font-semibold">Available Embedding Models</h2>
+          <h2 className="text-sm font-semibold">{t("models.availableModels")}</h2>
         </div>
         <table className="w-full">
           <thead>
             <tr className="border-b bg-muted/50">
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Model</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Provider</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Dimensions</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Max Tokens</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Status</th>
+              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">{t("models.model")}</th>
+              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">{t("models.provider")}</th>
+              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">{t("models.dimensions")}</th>
+              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">{t("models.maxTokens")}</th>
+              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">{t("models.status")}</th>
               <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3"></th>
             </tr>
           </thead>
@@ -68,17 +71,17 @@ const Models = () => {
                 <td className="px-5 py-3.5">
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-medium font-mono">{m.name}</span>
-                    {m.isDefault && <span className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full font-bold">DEFAULT</span>}
+                    {m.isDefault && <span className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full font-bold">{t("models.default")}</span>}
                   </div>
                 </td>
                 <td className="px-5 py-3.5 text-sm text-muted-foreground">{m.provider}</td>
                 <td className="px-5 py-3.5 text-sm font-mono">{m.dims.toLocaleString()}</td>
                 <td className="px-5 py-3.5 text-sm font-mono">{m.maxTokens.toLocaleString()}</td>
                 <td className="px-5 py-3.5">
-                  <StatusPill status={m.status === "active" ? "success" : "neutral"} label={m.status === "active" ? "Active" : "Inactive"} />
+                  <StatusPill status={m.status === "active" ? "success" : "neutral"} label={m.status === "active" ? t("models.active") : t("models.inactive")} />
                 </td>
                 <td className="px-5 py-3.5">
-                  {!m.isDefault && <button className="text-xs text-primary font-medium hover:underline">Set as Default</button>}
+                  {!m.isDefault && <button className="text-xs text-primary font-medium hover:underline">{t("models.setAsDefault")}</button>}
                 </td>
               </tr>
             ))}

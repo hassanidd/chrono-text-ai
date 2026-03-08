@@ -1,5 +1,7 @@
 import { Search, Bell, ChevronRight, Command, PanelLeftClose, PanelLeftOpen, Menu } from "lucide-react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 
 interface TopBarProps {
   title: string;
@@ -11,6 +13,8 @@ interface TopBarProps {
 }
 
 const TopBar = ({ title, breadcrumbs, actions, sidebarCollapsed, onToggleSidebar, isMobile }: TopBarProps) => {
+  const { t } = useTranslation();
+
   return (
     <header className="h-14 min-h-[3.5rem] bg-card/80 backdrop-blur-xl border-b flex items-center justify-between px-4 md:px-6 sticky top-0 z-30">
       <div className="flex items-center gap-3 min-w-0">
@@ -52,7 +56,7 @@ const TopBar = ({ title, breadcrumbs, actions, sidebarCollapsed, onToggleSidebar
         {/* Search - hidden on mobile */}
         <button className="hidden md:flex items-center gap-2.5 px-3 py-1.5 bg-muted/70 hover:bg-muted rounded-xl text-sm text-muted-foreground w-60 transition-colors duration-200 border border-transparent hover:border-border">
           <Search className="w-3.5 h-3.5" />
-          <span className="text-[13px]">Search...</span>
+          <span className="text-[13px]">{t("common.search")}</span>
           <kbd className="ml-auto text-[10px] bg-background/80 px-1.5 py-0.5 rounded-md border font-mono flex items-center gap-0.5">
             <Command className="w-2.5 h-2.5" />K
           </kbd>
@@ -62,6 +66,9 @@ const TopBar = ({ title, breadcrumbs, actions, sidebarCollapsed, onToggleSidebar
         <button className="md:hidden p-2 rounded-xl hover:bg-muted transition-all duration-200 text-muted-foreground hover:text-foreground">
           <Search className="w-4 h-4" />
         </button>
+
+        {/* Language Switcher */}
+        <LanguageSwitcher />
 
         {/* Notifications */}
         <button className="relative p-2 rounded-xl hover:bg-muted transition-all duration-200 group">

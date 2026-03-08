@@ -2,6 +2,7 @@ import AppLayout from "@/components/layout/AppLayout";
 import StatusPill from "@/components/shared/StatusPill";
 import { useNavigate } from "react-router-dom";
 import { Plus, Search, FileText, Filter, ChevronDown } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const ingestions = [
   { id: "ING-042", file: "Q4-Report.pdf", dataset: "Financial Reports", mode: "Auto", status: "success" as const, time: "Mar 5, 12:03", duration: "2m 14s", chunks: 142 },
@@ -16,80 +17,78 @@ const ingestions = [
   { id: "ING-033", file: "handbook-v3.docx", dataset: "HR", mode: "Auto", status: "success" as const, time: "Mar 3, 15:42", duration: "2m 50s", chunks: 112 },
 ];
 
-const statusLabels: Record<string, { s: "success" | "processing" | "error" | "neutral"; l: string }> = {
-  success: { s: "success", l: "Complete" },
-  processing: { s: "processing", l: "Processing" },
-  error: { s: "error", l: "Failed" },
-  neutral: { s: "neutral", l: "Queued" },
-};
-
 const IngestionsList = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const statusLabels: Record<string, { s: "success" | "processing" | "error" | "neutral"; l: string }> = {
+    success: { s: "success", l: t("ingestions.complete") },
+    processing: { s: "processing", l: t("ingestions.processing") },
+    error: { s: "error", l: t("ingestions.failed") },
+    neutral: { s: "neutral", l: t("ingestions.queued") },
+  };
 
   return (
     <AppLayout
-      title="Ingestions"
-      breadcrumbs={[{ label: "Ingestions" }]}
+      title={t("ingestions.title")}
+      breadcrumbs={[{ label: t("ingestions.title") }]}
       actions={
         <button
           onClick={() => navigate("/ingestions/new")}
           className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:opacity-90"
         >
-          <Plus className="w-4 h-4" /> New Ingestion
+          <Plus className="w-4 h-4" /> {t("ingestions.newIngestion")}
         </button>
       }
     >
       <div className="page-header">
-        <h1 className="page-title">Ingestions</h1>
-        <p className="page-description">Track and manage all document ingestion jobs</p>
+        <h1 className="page-title">{t("ingestions.title")}</h1>
+        <p className="page-description">{t("ingestions.subtitle")}</p>
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div className="card-elevated p-4 text-center">
           <p className="text-2xl font-bold">42</p>
-          <p className="text-xs text-muted-foreground">Total</p>
+          <p className="text-xs text-muted-foreground">{t("ingestions.total")}</p>
         </div>
         <div className="card-elevated p-4 text-center">
           <p className="text-2xl font-bold text-success">37</p>
-          <p className="text-xs text-muted-foreground">Completed</p>
+          <p className="text-xs text-muted-foreground">{t("ingestions.completed")}</p>
         </div>
         <div className="card-elevated p-4 text-center">
           <p className="text-2xl font-bold text-primary">2</p>
-          <p className="text-xs text-muted-foreground">In Progress</p>
+          <p className="text-xs text-muted-foreground">{t("ingestions.inProgress")}</p>
         </div>
         <div className="card-elevated p-4 text-center">
           <p className="text-2xl font-bold text-destructive">3</p>
-          <p className="text-xs text-muted-foreground">Failed</p>
+          <p className="text-xs text-muted-foreground">{t("ingestions.failed")}</p>
         </div>
       </div>
 
-      {/* Filters */}
       <div className="flex items-center gap-3 mb-6">
         <div className="flex items-center gap-2 px-3 py-2 bg-card border rounded-lg flex-1 max-w-md">
           <Search className="w-4 h-4 text-muted-foreground" />
-          <input type="text" placeholder="Search ingestions..." className="bg-transparent text-sm outline-none flex-1 placeholder:text-muted-foreground" />
+          <input type="text" placeholder={t("ingestions.searchIngestions")} className="bg-transparent text-sm outline-none flex-1 placeholder:text-muted-foreground" />
         </div>
-        {["Status", "Mode", "Dataset"].map(f => (
+        {[t("ingestions.status"), t("ingestions.mode"), t("ingestions.dataset")].map(f => (
           <button key={f} className="flex items-center gap-1.5 px-3 py-2 border rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted">
             <Filter className="w-3 h-3" /> {f} <ChevronDown className="w-3 h-3" />
           </button>
         ))}
       </div>
 
-      {/* Table */}
       <div className="card-elevated overflow-hidden">
         <table className="w-full">
           <thead>
             <tr className="border-b bg-muted/50">
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">ID</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">File</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Dataset</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Mode</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Status</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Time</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Duration</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Chunks</th>
+              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">{t("ingestions.id")}</th>
+              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">{t("ingestions.file")}</th>
+              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">{t("ingestions.dataset")}</th>
+              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">{t("ingestions.mode")}</th>
+              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">{t("ingestions.status")}</th>
+              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">{t("ingestions.time")}</th>
+              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">{t("ingestions.duration")}</th>
+              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">{t("ingestions.chunks")}</th>
             </tr>
           </thead>
           <tbody className="divide-y">
