@@ -42,7 +42,7 @@ const Dashboard = () => {
       </div>
 
       {/* Metric Cards */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <MetricCard icon={Database} label="Datasets" value="24" change="+3 this week" changeType="positive" delay={0} />
         <MetricCard icon={FileText} label="Documents" value="1,847" change="+127 this week" changeType="positive" delay={0.05} />
         <MetricCard icon={Layers} label="Chunks" value="89,412" change="+4,230 this week" changeType="positive" delay={0.1} />
