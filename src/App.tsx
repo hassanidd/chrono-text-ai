@@ -23,8 +23,8 @@ import Playground from "./pages/Playground";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
+import PublicLayout from "./components/layout/PublicLayout";
 import NotFound from "./pages/NotFound";
-
 const queryClient = new QueryClient();
 
 const App = () => (
