@@ -43,6 +43,7 @@ const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const [userOpen, setUserOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   const isActive = (path: string) =>
     location.pathname === path || (path !== "/" && location.pathname.startsWith(path));
