@@ -157,7 +157,33 @@
     "password": "Password",
     "createAccountBtn": "Create Account",
     "haveAccount": "Already have an account?",
-    "signIn": "Sign in"
+    "signIn": "Sign in",
+    "orContinueWith": "or continue with",
+    "agreeToTerms": "I agree to the",
+    "termsOfService": "Terms of Service",
+    "and": "and",
+    "privacyPolicy": "Privacy Policy",
+    "strength": {
+      "weak": "Weak",
+      "fair": "Fair",
+      "good": "Good",
+      "strong": "Strong"
+    },
+    "requirements": {
+      "minLength": "8+ characters",
+      "uppercase": "Uppercase letter",
+      "number": "Number",
+      "special": "Special character"
+    },
+    "errors": {
+      "nameRequired": "Full name is required",
+      "nameTooLong": "Name must be less than 100 characters",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email",
+      "passwordRequired": "Password is required",
+      "passwordTooShort": "Password must be at least 8 characters",
+      "termsRequired": "You must agree to the terms"
+    }
   },
   "forgotPassword": {
     "heroTitle": "Secure account\nrecovery",
