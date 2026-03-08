@@ -355,7 +355,7 @@ const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
                 alt="JD"
                 className="w-8 h-8 rounded-full"
               />
-              <div className="absolute -bottom-px -right-px w-2.5 h-2.5 rounded-full ring-2" style={{ background: "hsl(var(--success))", ringColor: "hsl(228 28% 11%)" }} />
+              <div className="absolute -bottom-px -right-px w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--success))", boxShadow: "0 0 0 2px hsl(228 28% 11%)" }} />
             </div>
             <div className="flex-1 min-w-0">
               <div className="text-[12px] font-medium text-sidebar-fg-active truncate">John Doe</div>
