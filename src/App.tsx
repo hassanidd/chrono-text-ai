@@ -3,7 +3,20 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
+import Dashboard from "./pages/Dashboard";
+import Datasets from "./pages/Datasets";
+import DatasetDetails from "./pages/DatasetDetails";
+import NewIngestion from "./pages/NewIngestion";
+import AutoMode from "./pages/AutoMode";
+import GuidedMode from "./pages/GuidedMode";
+import DocumentDetails from "./pages/DocumentDetails";
+import ChunkExplorer from "./pages/ChunkExplorer";
+import RetrievalTest from "./pages/RetrievalTest";
+import ActivityLogs from "./pages/ActivityLogs";
+import Settings from "./pages/Settings";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import ForgotPassword from "./pages/ForgotPassword";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -15,8 +28,21 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/datasets" element={<Datasets />} />
+          <Route path="/datasets/:id" element={<DatasetDetails />} />
+          <Route path="/ingestions/new" element={<NewIngestion />} />
+          <Route path="/ingestions/auto" element={<AutoMode />} />
+          <Route path="/ingestions/guided/*" element={<GuidedMode />} />
+          <Route path="/documents/:id" element={<DocumentDetails />} />
+          <Route path="/documents" element={<DocumentDetails />} />
+          <Route path="/chunks" element={<ChunkExplorer />} />
+          <Route path="/retrieval" element={<RetrievalTest />} />
+          <Route path="/activity" element={<ActivityLogs />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
