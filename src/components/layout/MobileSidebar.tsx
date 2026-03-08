@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard, Database, FileText, Zap, Search, Cpu, HardDrive,
-  Activity, Settings, Plus, MessageSquare, LogOut, Globe, User
+  Activity, Settings, Plus, MessageSquare, LogOut, Globe, User, Layers
 } from "lucide-react";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { useTranslation } from "react-i18next";
@@ -12,6 +12,7 @@ const navItems = [
   { icon: FileText, labelKey: "nav.documents", path: "/documents" },
   { type: "divider" as const },
   { icon: Zap, labelKey: "nav.ingestions", path: "/ingestions", badge: 3 },
+  { icon: Layers, labelKey: "nav.chunks", path: "/chunks" },
   { icon: Search, labelKey: "nav.retrieval", path: "/retrieval" },
   { icon: MessageSquare, labelKey: "nav.playground", path: "/playground" },
   { type: "divider" as const },

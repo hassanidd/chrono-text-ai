@@ -10,7 +10,8 @@
     "activity": "Attività",
     "settings": "Impostazioni",
     "newIngestion": "Nuova ingestione",
-    "playground": "Playground"
+    "playground": "Playground",
+    "chunks": "Chunks"
   },
   "dashboard": {
     "title": "Pannello",

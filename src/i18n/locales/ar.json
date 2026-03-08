@@ -10,7 +10,8 @@
     "activity": "النشاط",
     "settings": "الإعدادات",
     "newIngestion": "استيعاب جديد",
-    "playground": "ساحة التجربة"
+    "playground": "ساحة التجربة",
+    "chunks": "المقاطع"
   },
   "dashboard": {
     "title": "لوحة التحكم",
