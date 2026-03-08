@@ -18,6 +18,7 @@ import Settings from "./pages/Settings";
 import Models from "./pages/Models";
 import VectorStore from "./pages/VectorStore";
 import IngestionsList from "./pages/IngestionsList";
+import Playground from "./pages/Playground";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
