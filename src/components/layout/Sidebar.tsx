@@ -1,7 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard, Database, FileText, Zap, Search, Cpu, HardDrive,
-  Activity, Settings, Plus, MessageSquare, LogOut, Globe, ChevronRight, User
+  Activity, Settings, Plus, MessageSquare, LogOut, Globe, ChevronRight, User,
+  Sun, Moon, Monitor
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
@@ -9,6 +10,7 @@ import {
   Popover, PopoverContent, PopoverTrigger,
 } from "@/components/ui/popover";
 import { useState } from "react";
+import { useTheme } from "@/hooks/use-theme";
 
 const navItems = [
   { icon: LayoutDashboard, labelKey: "nav.dashboard", path: "/" },
@@ -41,6 +43,7 @@ const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const [userOpen, setUserOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   const isActive = (path: string) =>
     location.pathname === path || (path !== "/" && location.pathname.startsWith(path));
@@ -204,6 +207,33 @@ const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
                 <User className="w-4 h-4 text-muted-foreground" />
                 Profile
               </button>
+            </div>
+
+            {/* Theme */}
+            <div className="border-t py-1.5">
+              <div className="px-3 py-1.5">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Theme</span>
+              </div>
+              <div className="px-3 pb-1 flex gap-1">
+                {([
+                  { value: "light" as const, icon: Sun, label: "Light" },
+                  { value: "dark" as const, icon: Moon, label: "Dark" },
+                  { value: "system" as const, icon: Monitor, label: "System" },
+                ]).map(opt => (
+                  <button
+                    key={opt.value}
+                    onClick={() => setTheme(opt.value)}
+                    className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-md text-[11px] font-medium transition-colors ${
+                      theme === opt.value
+                        ? "bg-accent text-accent-foreground"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    }`}
+                  >
+                    <opt.icon className="w-3 h-3" />
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
             {/* Language */}
