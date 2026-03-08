@@ -42,26 +42,26 @@ const Dashboard = () => {
       </div>
 
       {/* Metric Cards */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <MetricCard icon={Database} label="Datasets" value="24" change="+3 this week" changeType="positive" delay={0} />
         <MetricCard icon={FileText} label="Documents" value="1,847" change="+127 this week" changeType="positive" delay={0.05} />
         <MetricCard icon={Layers} label="Chunks" value="89,412" change="+4,230 this week" changeType="positive" delay={0.1} />
         <MetricCard icon={Box} label="Embeddings" value="89,412" change="100% indexed" changeType="positive" delay={0.15} />
       </div>
 
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <MetricCard icon={Zap} label="Active Ingestions" value="3" change="2 auto, 1 guided" changeType="neutral" delay={0.2} />
         <MetricCard icon={AlertTriangle} label="Failed Jobs" value="1" change="Last: 2h ago" changeType="negative" delay={0.25} />
         <MetricCard icon={HardDrive} label="Vector Store" value="Healthy" change="Pinecone · 89K vectors" changeType="positive" delay={0.3} />
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Ingestions */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.35 }}
-          className="col-span-2 card-elevated overflow-hidden"
+          className="lg:col-span-2 card-elevated overflow-hidden"
         >
           <div className="flex items-center justify-between p-5 border-b">
             <h2 className="text-sm font-semibold">Recent Ingestions</h2>
@@ -85,14 +85,14 @@ const Dashboard = () => {
                   <p className="text-sm font-medium text-foreground truncate group-hover:text-primary transition-colors">{item.file}</p>
                   <p className="text-xs text-muted-foreground">{item.dataset}</p>
                 </div>
-                <span className="text-[11px] text-muted-foreground bg-muted px-2 py-0.5 rounded-md font-medium">{item.mode}</span>
+                <span className="hidden sm:inline text-[11px] text-muted-foreground bg-muted px-2 py-0.5 rounded-md font-medium">{item.mode}</span>
                 <StatusPill
                   status={item.status}
                   label={item.status === "processing" ? "Processing" : item.status === "success" ? "Complete" : "Failed"}
                   pulse={item.status === "processing"}
                 />
-                <span className="text-xs text-muted-foreground w-16 text-right font-mono">{item.chunks}</span>
-                <span className="text-[11px] text-muted-foreground w-12 text-right">{item.time}</span>
+                <span className="hidden sm:inline text-xs text-muted-foreground w-16 text-right font-mono">{item.chunks}</span>
+                <span className="hidden md:inline text-[11px] text-muted-foreground w-12 text-right">{item.time}</span>
               </motion.div>
             ))}
           </div>

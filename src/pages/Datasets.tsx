@@ -55,7 +55,7 @@ const Datasets = () => {
       </div>
 
       {view === "grid" ? (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {datasets.map((ds, idx) => (
             <motion.div
               key={ds.id}
@@ -98,9 +98,9 @@ const Datasets = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="card-elevated overflow-hidden"
+          className="card-elevated overflow-x-auto"
         >
-          <table className="w-full">
+          <table className="w-full min-w-[700px]">
             <thead>
               <tr className="border-b bg-muted/50">
                 <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-5 py-3">Name</th>
