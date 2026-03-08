@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard, Database, FileText, Zap, Search, Cpu, HardDrive,
-  Activity, Settings, Plus, MessageSquare
+  Activity, Settings, Plus, MessageSquare, LogOut, Globe, User
 } from "lucide-react";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { useTranslation } from "react-i18next";
@@ -20,6 +20,13 @@ const navItems = [
   { icon: Activity, labelKey: "nav.activity", path: "/activity" },
 ] as const;
 
+const languages = [
+  { code: "en", label: "English", flag: "🇬🇧" },
+  { code: "ar", label: "العربية", flag: "🇸🇦" },
+  { code: "fr", label: "Français", flag: "🇫🇷" },
+  { code: "it", label: "Italiano", flag: "🇮🇹" },
+];
+
 interface MobileSidebarProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -28,7 +35,7 @@ interface MobileSidebarProps {
 const MobileSidebar = ({ open, onOpenChange }: MobileSidebarProps) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const isActive = (path: string) =>
     location.pathname === path || (path !== "/" && location.pathname.startsWith(path));
@@ -38,9 +45,11 @@ const MobileSidebar = ({ open, onOpenChange }: MobileSidebarProps) => {
     onOpenChange(false);
   };
 
+  const currentLang = languages.find(l => l.code === i18n.language) || languages[0];
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="left" className="w-[260px] p-0 bg-sidebar-bg border-sidebar-border">
+      <SheetContent side="left" className="w-[260px] p-0 bg-sidebar-bg border-sidebar-border flex flex-col">
         {/* Logo */}
         <div className="flex items-center h-14 px-4 gap-3 border-b border-sidebar-border">
           <div
@@ -106,21 +115,53 @@ const MobileSidebar = ({ open, onOpenChange }: MobileSidebarProps) => {
           })}
         </nav>
 
-        {/* Settings */}
-        <div className="px-3 pb-3">
-          <button
-            onClick={() => handleNav("/settings")}
-            className={`
-              w-full flex items-center rounded-lg transition-colors duration-150 h-9 px-2.5 gap-2.5
-              ${isActive("/settings")
-                ? "bg-sidebar-hover text-sidebar-fg-active"
-                : "text-sidebar-fg hover:text-sidebar-fg-active hover:bg-sidebar-hover/50"
-              }
-            `}
-          >
-            <Settings className={`w-4 h-4 flex-shrink-0 ${isActive("/settings") ? "text-primary" : ""}`} strokeWidth={isActive("/settings") ? 2 : 1.6} />
-            <span className="text-[13px] font-medium">{t("nav.settings")}</span>
-          </button>
+        {/* Bottom — User section */}
+        <div className="border-t border-sidebar-border px-3 py-3 space-y-2">
+          {/* Language selector */}
+          <div className="flex items-center gap-1.5 flex-wrap px-1 mb-1">
+            {languages.map(lang => (
+              <button
+                key={lang.code}
+                onClick={() => i18n.changeLanguage(lang.code)}
+                className={`text-sm px-1.5 py-0.5 rounded transition-colors ${
+                  i18n.language === lang.code
+                    ? "bg-sidebar-hover text-sidebar-fg-active"
+                    : "text-sidebar-fg hover:text-sidebar-fg-active"
+                }`}
+              >
+                {lang.flag}
+              </button>
+            ))}
+          </div>
+
+          {/* User card */}
+          <div className="flex items-center gap-2.5 px-1">
+            <div className="w-8 h-8 rounded-lg bg-sidebar-hover flex items-center justify-center border border-sidebar-border flex-shrink-0">
+              <span className="text-[10px] font-bold text-sidebar-fg-active">JD</span>
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[12px] font-medium text-sidebar-fg-active truncate">John Doe</p>
+              <p className="text-[10px] text-sidebar-fg truncate">john.doe@vectorflow.ai</p>
+            </div>
+          </div>
+
+          {/* Action buttons */}
+          <div className="flex gap-1">
+            <button
+              onClick={() => handleNav("/settings")}
+              className="flex-1 flex items-center justify-center gap-1.5 h-8 rounded-lg text-sidebar-fg hover:text-sidebar-fg-active hover:bg-sidebar-hover/50 transition-colors"
+            >
+              <Settings className="w-3.5 h-3.5" />
+              <span className="text-[11px] font-medium">{t("nav.settings")}</span>
+            </button>
+            <button
+              onClick={() => handleNav("/login")}
+              className="flex-1 flex items-center justify-center gap-1.5 h-8 rounded-lg text-destructive/70 hover:text-destructive hover:bg-destructive/10 transition-colors"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span className="text-[11px] font-medium">Log out</span>
+            </button>
+          </div>
         </div>
       </SheetContent>
     </Sheet>
