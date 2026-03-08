@@ -40,7 +40,7 @@ const App = () => (
           <Route path="/ingestions/new" element={<NewIngestion />} />
           <Route path="/ingestions/auto" element={<AutoMode />} />
           <Route path="/ingestions/guided/*" element={<GuidedMode />} />
-          <Route path="/documents" element={<DocumentDetails />} />
+          <Route path="/documents" element={<DocumentsList />} />
           <Route path="/documents/:id" element={<DocumentDetails />} />
           <Route path="/chunks" element={<ChunkExplorer />} />
           <Route path="/retrieval" element={<RetrievalTest />} />
