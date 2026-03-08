@@ -50,7 +50,7 @@ const DocumentDetails = () => {
   return (
     <AppLayout
       title="Document"
-      breadcrumbs={[{ label: "Documents" }, { label: "Q4-Report.pdf" }]}
+      breadcrumbs={[{ label: "Documents", href: "/documents" }, { label: "Q4-Report.pdf" }]}
     >
       {/* Header */}
       <div className="card-elevated p-6 mb-6">
