@@ -1,8 +1,15 @@
 import AppLayout from "@/components/layout/AppLayout";
-import { useState } from "react";
-import { ChevronDown, Bell, Shield, Zap, SlidersHorizontal, Tag, RotateCw } from "lucide-react";
+import { useState, useRef } from "react";
+import { ChevronDown, Bell, Shield, Zap, SlidersHorizontal, Tag, RotateCw, User, Camera, Check } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { motion } from "framer-motion";
+import { toast } from "sonner";
 
 const sections = [
+  "Profile",
   "Embedding Models",
   "Chunking Defaults",
   "Metadata Defaults",
@@ -15,7 +22,17 @@ const sections = [
 ];
 
 const Settings = () => {
-  const [activeSection, setActiveSection] = useState("Embedding Models");
+  const [activeSection, setActiveSection] = useState("Profile");
+  const [displayName, setDisplayName] = useState("John Doe");
+  const [email, setEmail] = useState("john.doe@vectorflow.ai");
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [theme, setTheme] = useState("system");
+  const [language, setLanguage] = useState("en");
+  const [emailNotifs, setEmailNotifs] = useState(true);
+  const [desktopNotifs, setDesktopNotifs] = useState(false);
+  const [compactMode, setCompactMode] = useState(false);
+  const [showChunkScores, setShowChunkScores] = useState(true);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <AppLayout title="Settings" breadcrumbs={[{ label: "Settings" }]}>
