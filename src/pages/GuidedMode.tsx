@@ -1,5 +1,6 @@
 import AppLayout from "@/components/layout/AppLayout";
 import StepIndicator, { StepState } from "@/components/shared/StepIndicator";
+import StatusPill from "@/components/shared/StatusPill";
 import UploadZone from "@/components/shared/UploadZone";
 import ActionBar from "@/components/shared/ActionBar";
 import ContentBadge from "@/components/shared/ContentBadge";
