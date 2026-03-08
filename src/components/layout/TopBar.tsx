@@ -1,6 +1,8 @@
 import { Search, Bell, ChevronRight, Command, PanelLeftClose, PanelLeftOpen, Menu } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 
 interface TopBarProps {
