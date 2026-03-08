@@ -146,5 +146,26 @@
     "permissions": "Permessi",
     "retryPolicy": "Politica di ripetizione",
     "notifications": "Notifiche"
+  },
+  "signup": {
+    "heroTitle": "Inizia a costruire la tua\nbase di conoscenza IA",
+    "heroSubtitle": "Unisciti a migliaia di team che usano VectorFlow per alimentare le loro pipeline RAG e applicazioni LLM.",
+    "createAccount": "Crea il tuo account",
+    "getStarted": "Inizia con VectorFlow",
+    "fullName": "Nome completo",
+    "email": "E-mail",
+    "password": "Password",
+    "createAccountBtn": "Crea account",
+    "haveAccount": "Hai già un account?",
+    "signIn": "Accedi"
+  },
+  "forgotPassword": {
+    "heroTitle": "Recupero sicuro\ndell'account",
+    "heroSubtitle": "Ti aiuteremo a rientrare nel tuo account in modo rapido e sicuro.",
+    "title": "Reimposta la password",
+    "subtitle": "Inserisci la tua e-mail e ti invieremo un link per il ripristino",
+    "email": "E-mail",
+    "sendLink": "Invia link di ripristino",
+    "backToLogin": "Torna al login"
   }
 }

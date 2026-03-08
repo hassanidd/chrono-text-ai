@@ -146,5 +146,26 @@
     "permissions": "الأذونات",
     "retryPolicy": "سياسة إعادة المحاولة",
     "notifications": "الإشعارات"
+  },
+  "signup": {
+    "heroTitle": "ابدأ ببناء قاعدة\nالمعرفة الذكية",
+    "heroSubtitle": "انضم إلى آلاف الفرق التي تستخدم VectorFlow لتشغيل خطوط أنابيب RAG وتطبيقات LLM.",
+    "createAccount": "أنشئ حسابك",
+    "getStarted": "ابدأ مع VectorFlow",
+    "fullName": "الاسم الكامل",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "createAccountBtn": "إنشاء حساب",
+    "haveAccount": "لديك حساب بالفعل؟",
+    "signIn": "تسجيل الدخول"
+  },
+  "forgotPassword": {
+    "heroTitle": "استعادة الحساب\nبشكل آمن",
+    "heroSubtitle": "سنساعدك على العودة إلى حسابك بسرعة وأمان.",
+    "title": "إعادة تعيين كلمة المرور",
+    "subtitle": "أدخل بريدك الإلكتروني وسنرسل لك رابط إعادة التعيين",
+    "email": "البريد الإلكتروني",
+    "sendLink": "إرسال رابط إعادة التعيين",
+    "backToLogin": "العودة لتسجيل الدخول"
   }
 }
