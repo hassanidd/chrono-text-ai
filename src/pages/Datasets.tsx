@@ -1,10 +1,15 @@
 import AppLayout from "@/components/layout/AppLayout";
 import StatusPill from "@/components/shared/StatusPill";
-import { Plus, Search, LayoutGrid, List, Database, MoreHorizontal } from "lucide-react";
+import { Plus, Search, LayoutGrid, List, Database, MoreHorizontal, X } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const datasets = [
   { id: "1", name: "Financial Reports", description: "Quarterly and annual financial documents", owner: "John D.", visibility: "Private", docs: 234, chunks: 12840, created: "Jan 15, 2026", tags: ["finance", "reports"], status: "active" as const },
@@ -17,27 +22,37 @@ const datasets = [
 
 const Datasets = () => {
   const [view, setView] = useState<"grid" | "table">("grid");
+  const [createOpen, setCreateOpen] = useState(false);
+  const [newName, setNewName] = useState("");
+  const [newDescription, setNewDescription] = useState("");
+  const [newVisibility, setNewVisibility] = useState("private");
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  const handleCreate = () => {
+    // TODO: persist to backend
+    setCreateOpen(false);
+    setNewName("");
+    setNewDescription("");
+    setNewVisibility("private");
+  };
 
   return (
     <AppLayout
       title={t("datasets.title")}
       breadcrumbs={[{ label: t("datasets.title") }]}
-      actions={
-        <button
-          onClick={() => navigate("/datasets/new")}
-          className="btn-primary flex items-center gap-2"
-        >
-          <Plus className="w-4 h-4" /> {t("datasets.createDataset")}
-        </button>
-      }
     >
       <div className="page-header flex items-end justify-between">
         <div>
           <h1 className="page-title">{t("datasets.title")}</h1>
           <p className="page-description">{t("datasets.subtitle")}</p>
         </div>
+        <button
+          onClick={() => setCreateOpen(true)}
+          className="btn-primary flex items-center gap-2"
+        >
+          <Plus className="w-4 h-4" /> {t("datasets.createDataset")}
+        </button>
       </div>
 
       <div className="flex items-center gap-3 mb-6">
@@ -136,6 +151,50 @@ const Datasets = () => {
           </table>
         </motion.div>
       )}
+
+      {/* Create Dataset Modal */}
+      <Dialog open={createOpen} onOpenChange={setCreateOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>{t("datasets.createDataset")}</DialogTitle>
+            <DialogDescription>Add a new dataset to organize your documents and knowledge.</DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 pt-2">
+            <div>
+              <label className="text-xs font-medium text-foreground mb-1.5 block">Name</label>
+              <Input
+                placeholder="e.g. Financial Reports"
+                value={newName}
+                onChange={e => setNewName(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="text-xs font-medium text-foreground mb-1.5 block">Description</label>
+              <Textarea
+                placeholder="Describe the purpose of this dataset..."
+                value={newDescription}
+                onChange={e => setNewDescription(e.target.value)}
+                rows={3}
+              />
+            </div>
+            <div>
+              <label className="text-xs font-medium text-foreground mb-1.5 block">Visibility</label>
+              <Select value={newVisibility} onValueChange={setNewVisibility}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="private">Private</SelectItem>
+                  <SelectItem value="team">Team</SelectItem>
+                  <SelectItem value="public">Public</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex justify-end gap-2 pt-2">
+              <Button variant="outline" onClick={() => setCreateOpen(false)}>{t("common.cancel")}</Button>
+              <Button onClick={handleCreate} disabled={!newName.trim()}>{t("datasets.createDataset")}</Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </AppLayout>
   );
 };
