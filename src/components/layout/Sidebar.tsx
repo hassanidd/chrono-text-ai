@@ -338,7 +338,7 @@ const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
                     alt="JD"
                     className="w-8 h-8 rounded-full ring-2 ring-transparent group-hover:ring-primary/20 transition-all"
                   />
-                  <div className="absolute -bottom-px -right-px w-2.5 h-2.5 rounded-full ring-2" style={{ background: "hsl(var(--success))", ringColor: "hsl(228 28% 11%)" }} />
+                  <div className="absolute -bottom-px -right-px w-2.5 h-2.5 rounded-full" style={{ background: "hsl(var(--success))", boxShadow: "0 0 0 2px hsl(228 28% 11%)" }} />
                 </div>
               </button>
             </TooltipTrigger>
