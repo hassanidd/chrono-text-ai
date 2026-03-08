@@ -9,7 +9,8 @@
     "vectors": "Vecteurs",
     "activity": "Activité",
     "settings": "Paramètres",
-    "newIngestion": "Nouvelle ingestion"
+    "newIngestion": "Nouvelle ingestion",
+    "playground": "Playground"
   },
   "dashboard": {
     "title": "Tableau de bord",

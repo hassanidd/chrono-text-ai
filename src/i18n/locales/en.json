@@ -9,7 +9,8 @@
     "vectors": "Vectors",
     "activity": "Activity",
     "settings": "Settings",
-    "newIngestion": "New Ingestion"
+    "newIngestion": "New Ingestion",
+    "playground": "Playground"
   },
   "dashboard": {
     "title": "Dashboard",

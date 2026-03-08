@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard, Database, FileText, Zap, Search, Cpu, HardDrive,
-  Activity, Settings, Plus
+  Activity, Settings, Plus, MessageSquare
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
@@ -13,6 +13,7 @@ const navItems = [
   { type: "divider" as const },
   { icon: Zap, labelKey: "nav.ingestions", path: "/ingestions", badge: 3 },
   { icon: Search, labelKey: "nav.retrieval", path: "/retrieval" },
+  { icon: MessageSquare, labelKey: "nav.playground", path: "/playground" },
   { type: "divider" as const },
   { icon: Cpu, labelKey: "nav.models", path: "/models" },
   { icon: HardDrive, labelKey: "nav.vectors", path: "/vector-store" },
