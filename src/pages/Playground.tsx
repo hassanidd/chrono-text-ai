@@ -691,7 +691,7 @@ const Playground = () => {
                             <Badge variant="secondary" className="text-[9px] h-5">{selectedSource.language}</Badge>
                             <ContentBadge variant={selectedSource.contentType} />
                           </div>
-                          <button className="flex items-center gap-1 text-[10px] text-primary font-medium hover:underline">
+                          <button onClick={() => navigate("/chunks")} className="flex items-center gap-1 text-[10px] text-primary font-medium hover:underline">
                             <ExternalLink className="w-3 h-3" /> Open in Chunk Explorer
                           </button>
                         </div>
