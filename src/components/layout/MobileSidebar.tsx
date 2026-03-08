@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard, Database, FileText, Zap, Search, Cpu, HardDrive,
-  Activity, Settings, Plus
+  Activity, Settings, Plus, MessageSquare
 } from "lucide-react";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { useTranslation } from "react-i18next";
