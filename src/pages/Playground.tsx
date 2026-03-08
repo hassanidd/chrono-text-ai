@@ -170,6 +170,7 @@ const SourceCard = ({
 
 // --- Main Page ---
 const Playground = () => {
+  const navigate = useNavigate();
   const [selectedDatasets, setSelectedDatasets] = useState<string[]>(["ds-1", "ds-2"]);
   const [datasetSearch, setDatasetSearch] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
