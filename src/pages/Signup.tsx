@@ -281,6 +281,38 @@ const Signup = () => {
           </AnimatePresence>
         </div>
 
+        {/* Confirm Password */}
+        <div>
+          <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">{t("signup.confirmPassword")}</label>
+          <div className={`flex items-center gap-2 px-4 py-2.5 bg-muted rounded-xl border transition-all duration-200 ${
+            touched.confirmPassword && errors.confirmPassword ? "border-destructive/50" : "border-transparent focus-within:border-primary/30 focus-within:shadow-glow"
+          }`}>
+            <Lock className="w-4 h-4 text-muted-foreground" />
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="••••••••"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              onBlur={() => handleBlur("confirmPassword")}
+              className="bg-transparent text-sm outline-none flex-1 placeholder:text-muted-foreground"
+            />
+            {confirmPassword && (
+              confirmPassword === password ? (
+                <Check className="w-4 h-4 text-success" />
+              ) : (
+                <X className="w-4 h-4 text-destructive" />
+              )
+            )}
+          </div>
+          <AnimatePresence>
+            {touched.confirmPassword && errors.confirmPassword && (
+              <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="text-[11px] text-destructive mt-1.5 ml-1">
+                {errors.confirmPassword}
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </div>
+
         {/* Terms & conditions */}
         <div>
           <label className="flex items-start gap-2.5 cursor-pointer group">
