@@ -27,7 +27,7 @@ const Settings = () => {
   const [displayName, setDisplayName] = useState("John Doe");
   const [email, setEmail] = useState("john.doe@vectorflow.ai");
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-  const [theme, setTheme] = useState("system");
+  const { theme, setTheme } = useTheme();
   const [language, setLanguage] = useState("en");
   const [emailNotifs, setEmailNotifs] = useState(true);
   const [desktopNotifs, setDesktopNotifs] = useState(false);
