@@ -106,7 +106,7 @@ const Signup = () => {
     }
 
     return errs;
-  }, [name, email, password, agreedTerms, t]);
+  }, [name, email, password, confirmPassword, agreedTerms, t]);
 
   useEffect(() => {
     if (Object.keys(touched).length > 0) {
