@@ -9,6 +9,7 @@ interface FormErrors {
   name?: string;
   email?: string;
   password?: string;
+  confirmPassword?: string;
   terms?: string;
 }
 
@@ -45,6 +46,7 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [agreedTerms, setAgreedTerms] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -94,25 +96,31 @@ const Signup = () => {
       errs.password = t("signup.errors.passwordTooShort");
     }
 
+    if (!confirmPassword) {
+      errs.confirmPassword = t("signup.errors.confirmPasswordRequired");
+    } else if (confirmPassword !== password) {
+      errs.confirmPassword = t("signup.errors.passwordsMismatch");
+    }
+
     if (!agreedTerms) {
       errs.terms = t("signup.errors.termsRequired");
     }
 
     return errs;
-  }, [name, email, password, agreedTerms, t]);
+  }, [name, email, password, confirmPassword, agreedTerms, t]);
 
   useEffect(() => {
     if (Object.keys(touched).length > 0) {
       setErrors(validate());
     }
-  }, [name, email, password, agreedTerms, touched, validate]);
+  }, [name, email, password, confirmPassword, agreedTerms, touched, validate]);
 
   const handleBlur = (field: string) => {
     setTouched((prev) => ({ ...prev, [field]: true }));
   };
 
   const handleSubmit = () => {
-    setTouched({ name: true, email: true, password: true, terms: true });
+    setTouched({ name: true, email: true, password: true, confirmPassword: true, terms: true });
     const errs = validate();
     setErrors(errs);
     if (Object.keys(errs).length === 0) {
@@ -270,6 +278,38 @@ const Signup = () => {
                   ))}
                 </div>
               </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Confirm Password */}
+        <div>
+          <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">{t("signup.confirmPassword")}</label>
+          <div className={`flex items-center gap-2 px-4 py-2.5 bg-muted rounded-xl border transition-all duration-200 ${
+            touched.confirmPassword && errors.confirmPassword ? "border-destructive/50" : "border-transparent focus-within:border-primary/30 focus-within:shadow-glow"
+          }`}>
+            <Lock className="w-4 h-4 text-muted-foreground" />
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="••••••••"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              onBlur={() => handleBlur("confirmPassword")}
+              className="bg-transparent text-sm outline-none flex-1 placeholder:text-muted-foreground"
+            />
+            {confirmPassword && (
+              confirmPassword === password ? (
+                <Check className="w-4 h-4 text-success" />
+              ) : (
+                <X className="w-4 h-4 text-destructive" />
+              )
+            )}
+          </div>
+          <AnimatePresence>
+            {touched.confirmPassword && errors.confirmPassword && (
+              <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="text-[11px] text-destructive mt-1.5 ml-1">
+                {errors.confirmPassword}
+              </motion.p>
             )}
           </AnimatePresence>
         </div>

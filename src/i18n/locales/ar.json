@@ -160,6 +160,7 @@
     "fullName": "الاسم الكامل",
     "email": "البريد الإلكتروني",
     "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
     "createAccountBtn": "إنشاء حساب",
     "haveAccount": "لديك حساب بالفعل؟",
     "signIn": "تسجيل الدخول",
@@ -187,6 +188,8 @@
       "emailInvalid": "يرجى إدخال بريد إلكتروني صالح",
       "passwordRequired": "كلمة المرور مطلوبة",
       "passwordTooShort": "يجب أن تكون كلمة المرور ٨ أحرف على الأقل",
+      "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
+      "passwordsMismatch": "كلمات المرور غير متطابقة",
       "termsRequired": "يجب الموافقة على الشروط"
     }
   },

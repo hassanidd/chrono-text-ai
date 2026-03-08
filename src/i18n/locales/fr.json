@@ -160,6 +160,7 @@
     "fullName": "Nom complet",
     "email": "E-mail",
     "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
     "createAccountBtn": "Créer un compte",
     "haveAccount": "Vous avez déjà un compte ?",
     "signIn": "Se connecter",
@@ -187,6 +188,8 @@
       "emailInvalid": "Veuillez entrer un e-mail valide",
       "passwordRequired": "Le mot de passe est requis",
       "passwordTooShort": "Le mot de passe doit comporter au moins 8 caractères",
+      "confirmPasswordRequired": "Veuillez confirmer votre mot de passe",
+      "passwordsMismatch": "Les mots de passe ne correspondent pas",
       "termsRequired": "Vous devez accepter les conditions"
     }
   },
