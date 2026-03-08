@@ -1,7 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard, Database, FileText, Zap, Search, Cpu, HardDrive,
-  Activity, Settings, Plus, MessageSquare, LogOut, Globe, ChevronRight, User
+  Activity, Settings, Plus, MessageSquare, LogOut, Globe, ChevronRight, User,
+  Sun, Moon, Monitor
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
