@@ -146,5 +146,26 @@
     "permissions": "Permissions",
     "retryPolicy": "Retry Policy",
     "notifications": "Notifications"
+  },
+  "signup": {
+    "heroTitle": "Start building your\nAI knowledge base",
+    "heroSubtitle": "Join thousands of teams using VectorFlow to power their RAG pipelines and LLM applications.",
+    "createAccount": "Create your account",
+    "getStarted": "Get started with VectorFlow",
+    "fullName": "Full Name",
+    "email": "Email",
+    "password": "Password",
+    "createAccountBtn": "Create Account",
+    "haveAccount": "Already have an account?",
+    "signIn": "Sign in"
+  },
+  "forgotPassword": {
+    "heroTitle": "Secure account\nrecovery",
+    "heroSubtitle": "We'll help you get back into your account quickly and securely.",
+    "title": "Reset your password",
+    "subtitle": "Enter your email and we'll send you a reset link",
+    "email": "Email",
+    "sendLink": "Send Reset Link",
+    "backToLogin": "Back to sign in"
   }
 }
