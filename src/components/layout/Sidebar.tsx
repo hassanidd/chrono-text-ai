@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard, Database, FileText, Zap, Search, Cpu, HardDrive,
-  Activity, Settings, Plus
+  Activity, Settings, Plus, MessageSquare
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
