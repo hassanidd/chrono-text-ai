@@ -157,7 +157,33 @@
     "password": "Mot de passe",
     "createAccountBtn": "Créer un compte",
     "haveAccount": "Vous avez déjà un compte ?",
-    "signIn": "Se connecter"
+    "signIn": "Se connecter",
+    "orContinueWith": "ou continuez avec",
+    "agreeToTerms": "J'accepte les",
+    "termsOfService": "Conditions d'utilisation",
+    "and": "et la",
+    "privacyPolicy": "Politique de confidentialité",
+    "strength": {
+      "weak": "Faible",
+      "fair": "Passable",
+      "good": "Bon",
+      "strong": "Fort"
+    },
+    "requirements": {
+      "minLength": "8+ caractères",
+      "uppercase": "Lettre majuscule",
+      "number": "Chiffre",
+      "special": "Caractère spécial"
+    },
+    "errors": {
+      "nameRequired": "Le nom complet est requis",
+      "nameTooLong": "Le nom doit faire moins de 100 caractères",
+      "emailRequired": "L'e-mail est requis",
+      "emailInvalid": "Veuillez entrer un e-mail valide",
+      "passwordRequired": "Le mot de passe est requis",
+      "passwordTooShort": "Le mot de passe doit comporter au moins 8 caractères",
+      "termsRequired": "Vous devez accepter les conditions"
+    }
   },
   "forgotPassword": {
     "heroTitle": "Récupération sécurisée\nde votre compte",

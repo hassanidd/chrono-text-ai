@@ -157,7 +157,33 @@
     "password": "كلمة المرور",
     "createAccountBtn": "إنشاء حساب",
     "haveAccount": "لديك حساب بالفعل؟",
-    "signIn": "تسجيل الدخول"
+    "signIn": "تسجيل الدخول",
+    "orContinueWith": "أو تابع باستخدام",
+    "agreeToTerms": "أوافق على",
+    "termsOfService": "شروط الخدمة",
+    "and": "و",
+    "privacyPolicy": "سياسة الخصوصية",
+    "strength": {
+      "weak": "ضعيفة",
+      "fair": "مقبولة",
+      "good": "جيدة",
+      "strong": "قوية"
+    },
+    "requirements": {
+      "minLength": "٨+ أحرف",
+      "uppercase": "حرف كبير",
+      "number": "رقم",
+      "special": "رمز خاص"
+    },
+    "errors": {
+      "nameRequired": "الاسم الكامل مطلوب",
+      "nameTooLong": "يجب أن يكون الاسم أقل من ١٠٠ حرف",
+      "emailRequired": "البريد الإلكتروني مطلوب",
+      "emailInvalid": "يرجى إدخال بريد إلكتروني صالح",
+      "passwordRequired": "كلمة المرور مطلوبة",
+      "passwordTooShort": "يجب أن تكون كلمة المرور ٨ أحرف على الأقل",
+      "termsRequired": "يجب الموافقة على الشروط"
+    }
   },
   "forgotPassword": {
     "heroTitle": "استعادة الحساب\nبشكل آمن",
