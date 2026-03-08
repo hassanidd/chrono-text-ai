@@ -120,7 +120,12 @@
     "heroSubtitle": "Carica, estrai, frammenta, integra e indicizza i tuoi documenti in database vettoriali. Costruisci potenti sistemi RAG con controllo completo sulla tua pipeline.",
     "chunksProcessed": "Frammenti elaborati",
     "enterpriseTeams": "Team aziendali",
-    "uptimeSLA": "SLA di uptime"
+    "uptimeSLA": "SLA di uptime",
+    "errors": {
+      "emailRequired": "L'e-mail è obbligatoria",
+      "emailInvalid": "Inserisci un'e-mail valida",
+      "passwordRequired": "La password è obbligatoria"
+    }
   },
   "common": {
     "search": "Cerca...",
