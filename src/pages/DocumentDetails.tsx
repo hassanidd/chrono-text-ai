@@ -29,7 +29,7 @@ const docMeta = [
   { field: "fiscal_year", value: "2025" },
 ];
 
-const logEntries = [
+const logEntries: { time: string; event: string; level: "success" | "info" | "error" }[] = [
   { time: "Mar 5, 12:03:14", event: "Ingestion completed — 142 chunks indexed", level: "success" as const },
   { time: "Mar 5, 12:02:58", event: "Embedding complete — 142 vectors generated (text-embedding-3-large)", level: "success" as const },
   { time: "Mar 5, 12:02:30", event: "Metadata assigned to 142 chunks", level: "info" as const },
