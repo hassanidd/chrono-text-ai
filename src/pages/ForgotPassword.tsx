@@ -1,16 +1,22 @@
 import { Mail, ArrowRight, ArrowLeft } from "lucide-react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import PublicLayout from "@/components/layout/PublicLayout";
+import { usePublicLayout } from "@/components/layout/PublicLayout";
 
 const ForgotPassword = () => {
   const { t } = useTranslation();
+  const { setHero } = usePublicLayout();
+
+  useEffect(() => {
+    setHero({
+      title: t("forgotPassword.heroTitle"),
+      subtitle: t("forgotPassword.heroSubtitle"),
+    });
+  }, [t, setHero]);
 
   return (
-    <PublicLayout
-      heroTitle={t("forgotPassword.heroTitle")}
-      heroSubtitle={t("forgotPassword.heroSubtitle")}
-    >
+    <>
       <h2 className="text-2xl font-bold mb-1">{t("forgotPassword.title")}</h2>
       <p className="text-sm text-muted-foreground mb-8">{t("forgotPassword.subtitle")}</p>
 
@@ -31,7 +37,7 @@ const ForgotPassword = () => {
           <ArrowLeft className="w-3 h-3" /> {t("forgotPassword.backToLogin")}
         </Link>
       </div>
-    </PublicLayout>
+    </>
   );
 };
 
