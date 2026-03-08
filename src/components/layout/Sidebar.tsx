@@ -209,6 +209,33 @@ const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
               </button>
             </div>
 
+            {/* Theme */}
+            <div className="border-t py-1.5">
+              <div className="px-3 py-1.5">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Theme</span>
+              </div>
+              <div className="px-3 pb-1 flex gap-1">
+                {([
+                  { value: "light" as const, icon: Sun, label: "Light" },
+                  { value: "dark" as const, icon: Moon, label: "Dark" },
+                  { value: "system" as const, icon: Monitor, label: "System" },
+                ]).map(opt => (
+                  <button
+                    key={opt.value}
+                    onClick={() => setTheme(opt.value)}
+                    className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-md text-[11px] font-medium transition-colors ${
+                      theme === opt.value
+                        ? "bg-accent text-accent-foreground"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    }`}
+                  >
+                    <opt.icon className="w-3 h-3" />
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Language */}
             <div className="border-t py-1.5">
               <div className="px-3 py-1.5">
