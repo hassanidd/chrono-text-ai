@@ -1,8 +1,15 @@
 import AppLayout from "@/components/layout/AppLayout";
-import { useState } from "react";
-import { ChevronDown, Bell, Shield, Zap, SlidersHorizontal, Tag, RotateCw } from "lucide-react";
+import { useState, useRef } from "react";
+import { ChevronDown, Bell, Shield, Zap, SlidersHorizontal, Tag, RotateCw, User, Camera, Check } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { motion } from "framer-motion";
+import { toast } from "sonner";
 
 const sections = [
+  "Profile",
   "Embedding Models",
   "Chunking Defaults",
   "Metadata Defaults",
@@ -15,7 +22,17 @@ const sections = [
 ];
 
 const Settings = () => {
-  const [activeSection, setActiveSection] = useState("Embedding Models");
+  const [activeSection, setActiveSection] = useState("Profile");
+  const [displayName, setDisplayName] = useState("John Doe");
+  const [email, setEmail] = useState("john.doe@vectorflow.ai");
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [theme, setTheme] = useState("system");
+  const [language, setLanguage] = useState("en");
+  const [emailNotifs, setEmailNotifs] = useState(true);
+  const [desktopNotifs, setDesktopNotifs] = useState(false);
+  const [compactMode, setCompactMode] = useState(false);
+  const [showChunkScores, setShowChunkScores] = useState(true);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <AppLayout title="Settings" breadcrumbs={[{ label: "Settings" }]}>
@@ -42,6 +59,137 @@ const Settings = () => {
 
         {/* Content */}
         <div className="col-span-3 space-y-6">
+          {activeSection === "Profile" && (
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25 }}
+              className="space-y-6"
+            >
+              {/* Avatar & Basic Info */}
+              <div className="card-elevated p-6">
+                <h2 className="text-base font-semibold mb-5">Profile Information</h2>
+                <div className="flex items-start gap-6">
+                  {/* Avatar */}
+                  <div className="relative group">
+                    <div className="w-20 h-20 rounded-2xl bg-accent flex items-center justify-center overflow-hidden border-2 border-border">
+                      {avatarUrl ? (
+                        <img src={avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-2xl font-bold text-accent-foreground">
+                          {displayName.split(" ").map(n => n[0]).join("").toUpperCase()}
+                        </span>
+                      )}
+                    </div>
+                    <button
+                      onClick={() => fileInputRef.current?.click()}
+                      className="absolute inset-0 rounded-2xl bg-foreground/0 group-hover:bg-foreground/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200"
+                    >
+                      <Camera className="w-5 h-5 text-primary-foreground" />
+                    </button>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const url = URL.createObjectURL(file);
+                          setAvatarUrl(url);
+                        }
+                      }}
+                    />
+                  </div>
+                  {/* Fields */}
+                  <div className="flex-1 space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Display Name</label>
+                        <Input value={displayName} onChange={e => setDisplayName(e.target.value)} />
+                      </div>
+                      <div>
+                        <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Email</label>
+                        <Input value={email} onChange={e => setEmail(e.target.value)} type="email" />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Role</label>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-foreground">Admin</span>
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-primary/10 text-primary border border-primary/15">Owner</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-end mt-5 pt-4 border-t">
+                  <Button
+                    size="sm"
+                    onClick={() => toast.success("Profile updated successfully")}
+                  >
+                    <Check className="w-3.5 h-3.5 mr-1.5" /> Save Changes
+                  </Button>
+                </div>
+              </div>
+
+              {/* Preferences */}
+              <div className="card-elevated p-6">
+                <h2 className="text-base font-semibold mb-5">Preferences</h2>
+                <div className="space-y-5">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Theme</label>
+                      <Select value={theme} onValueChange={setTheme}>
+                        <SelectTrigger><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="light">Light</SelectItem>
+                          <SelectItem value="dark">Dark</SelectItem>
+                          <SelectItem value="system">System</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Language</label>
+                      <Select value={language} onValueChange={setLanguage}>
+                        <SelectTrigger><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="en">English</SelectItem>
+                          <SelectItem value="fr">Français</SelectItem>
+                          <SelectItem value="it">Italiano</SelectItem>
+                          <SelectItem value="ar">العربية</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  <div className="space-y-3 pt-2">
+                    {[
+                      { label: "Email notifications", desc: "Receive alerts about ingestion completions and errors", checked: emailNotifs, onChange: setEmailNotifs },
+                      { label: "Desktop notifications", desc: "Browser push notifications for real-time updates", checked: desktopNotifs, onChange: setDesktopNotifs },
+                      { label: "Compact mode", desc: "Reduce spacing and card sizes for denser layouts", checked: compactMode, onChange: setCompactMode },
+                      { label: "Show chunk scores", desc: "Display similarity scores in retrieval results", checked: showChunkScores, onChange: setShowChunkScores },
+                    ].map(pref => (
+                      <div key={pref.label} className="flex items-center justify-between py-2 border-b border-border/50 last:border-0">
+                        <div>
+                          <p className="text-sm font-medium text-foreground">{pref.label}</p>
+                          <p className="text-xs text-muted-foreground">{pref.desc}</p>
+                        </div>
+                        <Switch checked={pref.checked} onCheckedChange={pref.onChange} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex justify-end mt-5 pt-4 border-t">
+                  <Button
+                    size="sm"
+                    onClick={() => toast.success("Preferences saved")}
+                  >
+                    <Check className="w-3.5 h-3.5 mr-1.5" /> Save Preferences
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
           {activeSection === "Embedding Models" && (
             <div className="card-elevated p-6">
               <h2 className="text-base font-semibold mb-4">Embedding Model Configuration</h2>
