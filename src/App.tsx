@@ -48,6 +48,7 @@ const App = () => (
           <Route path="/models" element={<Models />} />
           <Route path="/vector-store" element={<VectorStore />} />
           <Route path="/activity" element={<ActivityLogs />} />
+          <Route path="/playground" element={<Playground />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
