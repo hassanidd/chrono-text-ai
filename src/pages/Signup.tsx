@@ -95,6 +95,12 @@ const Signup = () => {
       errs.password = t("signup.errors.passwordTooShort");
     }
 
+    if (!confirmPassword) {
+      errs.confirmPassword = t("signup.errors.confirmPasswordRequired");
+    } else if (confirmPassword !== password) {
+      errs.confirmPassword = t("signup.errors.passwordsMismatch");
+    }
+
     if (!agreedTerms) {
       errs.terms = t("signup.errors.termsRequired");
     }
