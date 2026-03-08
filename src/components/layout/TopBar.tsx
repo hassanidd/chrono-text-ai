@@ -2,7 +2,6 @@ import { Search, Bell, ChevronRight, Command, PanelLeftClose, PanelLeftOpen, Men
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 
 interface TopBarProps {
   title: string;
@@ -70,9 +69,6 @@ const TopBar = ({ title, breadcrumbs, actions, sidebarCollapsed, onToggleSidebar
         <button className="md:hidden p-2 rounded-xl hover:bg-muted transition-all duration-200 text-muted-foreground hover:text-foreground">
           <Search className="w-4 h-4" />
         </button>
-
-        {/* Language Switcher */}
-        <LanguageSwitcher />
 
         {/* Notifications */}
         <button className="relative p-2 rounded-xl hover:bg-muted transition-all duration-200 group">
