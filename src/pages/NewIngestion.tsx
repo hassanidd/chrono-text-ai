@@ -2,7 +2,8 @@ import AppLayout from "@/components/layout/AppLayout";
 import UploadZone from "@/components/shared/UploadZone";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Zap, SlidersHorizontal, ChevronDown, ArrowRight } from "lucide-react";
+import { Zap, SlidersHorizontal, ChevronDown, ArrowRight, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
 
 const NewIngestion = () => {
   const [mode, setMode] = useState<"auto" | "guided" | null>(null);
@@ -20,19 +21,32 @@ const NewIngestion = () => {
       breadcrumbs={[{ label: "Ingestions" }, { label: "New Ingestion" }]}
     >
       <div className="max-w-3xl mx-auto">
-        <div className="page-header text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="page-header text-center"
+        >
+          <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-glow" style={{ background: "var(--gradient-primary)" }}>
+            <Sparkles className="w-7 h-7 text-primary-foreground" />
+          </div>
           <h1 className="page-title">New Ingestion</h1>
           <p className="page-description">Upload a document and choose how to process it</p>
-        </div>
+        </motion.div>
 
         {/* Dataset Selector */}
-        <div className="card-elevated p-5 mb-6">
-          <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2 block">Dataset</label>
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.05 }}
+          className="card-elevated p-5 mb-4"
+        >
+          <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">Dataset</label>
           <div className="relative">
             <select
               value={dataset}
               onChange={(e) => setDataset(e.target.value)}
-              className="w-full px-4 py-2.5 bg-muted rounded-lg text-sm font-medium appearance-none cursor-pointer outline-none border-0"
+              className="w-full px-4 py-2.5 bg-muted rounded-xl text-sm font-medium appearance-none cursor-pointer outline-none border border-transparent focus:border-primary/30 transition-colors"
             >
               <option value="financial-reports">Financial Reports</option>
               <option value="product-docs">Product Documentation</option>
@@ -41,57 +55,78 @@ const NewIngestion = () => {
             </select>
             <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
           </div>
-        </div>
+        </motion.div>
 
         {/* Upload */}
-        <div className="card-elevated p-5 mb-6">
-          <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3 block">Upload File</label>
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+          className="card-elevated p-5 mb-4"
+        >
+          <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-3 block">Upload File</label>
           <UploadZone />
-        </div>
+        </motion.div>
 
         {/* Mode Selection */}
-        <div className="card-elevated p-5 mb-6">
-          <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3 block">Ingestion Mode</label>
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.15 }}
+          className="card-elevated p-5 mb-6"
+        >
+          <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-3 block">Ingestion Mode</label>
           <div className="grid grid-cols-2 gap-4">
-            <button
+            <motion.button
               onClick={() => setMode("auto")}
-              className={`p-5 rounded-xl border-2 text-left transition-all ${
-                mode === "auto" ? "border-primary bg-accent" : "border-border hover:border-primary/30"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              className={`p-5 rounded-2xl border-2 text-left transition-all duration-200 ${
+                mode === "auto" ? "border-primary bg-accent shadow-glow" : "border-border hover:border-primary/30"
               }`}
             >
-              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-3">
-                <Zap className="w-5 h-5 text-primary" />
+              <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-3 transition-all ${
+                mode === "auto" ? "shadow-glow" : ""
+              }`} style={mode === "auto" ? { background: "var(--gradient-primary)" } : { background: "hsl(var(--accent))" }}>
+                <Zap className={`w-5 h-5 ${mode === "auto" ? "text-primary-foreground" : "text-accent-foreground"}`} />
               </div>
-              <h3 className="text-sm font-semibold mb-1">Auto Mode</h3>
-              <p className="text-xs text-muted-foreground">
+              <h3 className="text-sm font-bold mb-1">Auto Mode</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 Automatically process the entire pipeline with minimal interaction. Best for bulk ingestion.
               </p>
-            </button>
-            <button
+            </motion.button>
+            <motion.button
               onClick={() => setMode("guided")}
-              className={`p-5 rounded-xl border-2 text-left transition-all ${
-                mode === "guided" ? "border-primary bg-accent" : "border-border hover:border-primary/30"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              className={`p-5 rounded-2xl border-2 text-left transition-all duration-200 ${
+                mode === "guided" ? "border-primary bg-accent shadow-glow" : "border-border hover:border-primary/30"
               }`}
             >
-              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-3">
-                <SlidersHorizontal className="w-5 h-5 text-primary" />
+              <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-3 transition-all ${
+                mode === "guided" ? "shadow-glow" : ""
+              }`} style={mode === "guided" ? { background: "var(--gradient-primary)" } : { background: "hsl(var(--accent))" }}>
+                <SlidersHorizontal className={`w-5 h-5 ${mode === "guided" ? "text-primary-foreground" : "text-accent-foreground"}`} />
               </div>
-              <h3 className="text-sm font-semibold mb-1">Guided Mode</h3>
-              <p className="text-xs text-muted-foreground">
+              <h3 className="text-sm font-bold mb-1">Guided Mode</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 Review and approve each step. Full control over extraction, chunks, embeddings, and metadata.
               </p>
-            </button>
+            </motion.button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Start Button */}
-        <button
+        <motion.button
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
           onClick={handleStart}
           disabled={!mode}
-          className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-primary text-primary-foreground text-sm font-semibold rounded-xl hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
+          className="btn-primary w-full flex items-center justify-center gap-2 !py-3.5 !rounded-2xl !text-base disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none"
         >
           Start Ingestion <ArrowRight className="w-4 h-4" />
-        </button>
+        </motion.button>
       </div>
     </AppLayout>
   );
