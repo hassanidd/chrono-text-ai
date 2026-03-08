@@ -49,7 +49,7 @@ const Dashboard = () => {
         <MetricCard icon={Box} label="Embeddings" value="89,412" change="100% indexed" changeType="positive" delay={0.15} />
       </div>
 
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <MetricCard icon={Zap} label="Active Ingestions" value="3" change="2 auto, 1 guided" changeType="neutral" delay={0.2} />
         <MetricCard icon={AlertTriangle} label="Failed Jobs" value="1" change="Last: 2h ago" changeType="negative" delay={0.25} />
         <MetricCard icon={HardDrive} label="Vector Store" value="Healthy" change="Pinecone · 89K vectors" changeType="positive" delay={0.3} />
