@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
+import DocumentsList from "./pages/DocumentsList";
 import Datasets from "./pages/Datasets";
 import DatasetDetails from "./pages/DatasetDetails";
 import NewIngestion from "./pages/NewIngestion";
@@ -39,7 +40,7 @@ const App = () => (
           <Route path="/ingestions/new" element={<NewIngestion />} />
           <Route path="/ingestions/auto" element={<AutoMode />} />
           <Route path="/ingestions/guided/*" element={<GuidedMode />} />
-          <Route path="/documents" element={<DocumentDetails />} />
+          <Route path="/documents" element={<DocumentsList />} />
           <Route path="/documents/:id" element={<DocumentDetails />} />
           <Route path="/chunks" element={<ChunkExplorer />} />
           <Route path="/retrieval" element={<RetrievalTest />} />
