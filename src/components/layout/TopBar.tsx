@@ -44,7 +44,10 @@ const TopBar = ({ title, breadcrumbs, actions, sidebarCollapsed, onToggleSidebar
             {breadcrumbs.map((crumb, i) => (
               <span key={i} className="flex items-center gap-1.5 min-w-0">
                 {i > 0 && <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/50 flex-shrink-0" />}
-                <span className={`transition-colors duration-200 truncate ${i === breadcrumbs.length - 1 ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground cursor-pointer"}`}>
+                <span
+                  onClick={() => crumb.href && navigate(crumb.href)}
+                  className={`transition-colors duration-200 truncate ${i === breadcrumbs.length - 1 ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground cursor-pointer"}`}
+                >
                   {crumb.label}
                 </span>
               </span>
