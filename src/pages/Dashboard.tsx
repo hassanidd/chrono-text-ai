@@ -85,14 +85,14 @@ const Dashboard = () => {
                   <p className="text-sm font-medium text-foreground truncate group-hover:text-primary transition-colors">{item.file}</p>
                   <p className="text-xs text-muted-foreground">{item.dataset}</p>
                 </div>
-                <span className="text-[11px] text-muted-foreground bg-muted px-2 py-0.5 rounded-md font-medium">{item.mode}</span>
+                <span className="hidden sm:inline text-[11px] text-muted-foreground bg-muted px-2 py-0.5 rounded-md font-medium">{item.mode}</span>
                 <StatusPill
                   status={item.status}
                   label={item.status === "processing" ? "Processing" : item.status === "success" ? "Complete" : "Failed"}
                   pulse={item.status === "processing"}
                 />
-                <span className="text-xs text-muted-foreground w-16 text-right font-mono">{item.chunks}</span>
-                <span className="text-[11px] text-muted-foreground w-12 text-right">{item.time}</span>
+                <span className="hidden sm:inline text-xs text-muted-foreground w-16 text-right font-mono">{item.chunks}</span>
+                <span className="hidden md:inline text-[11px] text-muted-foreground w-12 text-right">{item.time}</span>
               </motion.div>
             ))}
           </div>
