@@ -16,7 +16,7 @@ interface TopBarProps {
 
 const TopBar = ({ title, breadcrumbs, actions, sidebarCollapsed, onToggleSidebar, isMobile }: TopBarProps) => {
   const { t } = useTranslation();
-
+  const navigate = useNavigate();
   return (
     <header className="h-14 min-h-[3.5rem] bg-card/80 backdrop-blur-xl border-b flex items-center justify-between px-4 md:px-6 sticky top-0 z-30">
       <div className="flex items-center gap-3 min-w-0">
