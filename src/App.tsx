@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
+import DocumentsList from "./pages/DocumentsList";
 import Datasets from "./pages/Datasets";
 import DatasetDetails from "./pages/DatasetDetails";
 import NewIngestion from "./pages/NewIngestion";
