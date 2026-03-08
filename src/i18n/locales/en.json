@@ -10,7 +10,8 @@
     "activity": "Activity",
     "settings": "Settings",
     "newIngestion": "New Ingestion",
-    "playground": "Playground"
+    "playground": "Playground",
+    "chunks": "Chunks"
   },
   "dashboard": {
     "title": "Dashboard",
