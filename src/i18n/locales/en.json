@@ -120,7 +120,12 @@
     "heroSubtitle": "Upload, extract, chunk, embed, and index your documents into vector databases. Build powerful RAG systems with full control over your ingestion pipeline.",
     "chunksProcessed": "Chunks processed",
     "enterpriseTeams": "Enterprise teams",
-    "uptimeSLA": "Uptime SLA"
+    "uptimeSLA": "Uptime SLA",
+    "errors": {
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email",
+      "passwordRequired": "Password is required"
+    }
   },
   "common": {
     "search": "Search...",
