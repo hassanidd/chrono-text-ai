@@ -10,6 +10,7 @@ import {
   Popover, PopoverContent, PopoverTrigger,
 } from "@/components/ui/popover";
 import { useState } from "react";
+import { useTheme } from "@/hooks/use-theme";
 
 const navItems = [
   { icon: LayoutDashboard, labelKey: "nav.dashboard", path: "/" },
