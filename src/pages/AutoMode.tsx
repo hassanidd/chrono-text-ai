@@ -82,7 +82,7 @@ const AutoMode = () => {
                 <div className="w-full bg-muted rounded-full h-2 mb-2">
                   <div className="bg-primary rounded-full h-2 transition-all duration-1000" style={{ width: `${((demoStep + 1) / stepLabels.length) * 100}%` }} />
                 </div>
-                <p className="text-xs text-muted-foreground">Chunking content with semantic strategy...</p>
+                <p className="text-xs text-muted-foreground">{stepLabels[demoStep]} in progress...</p>
               </div>
 
               {/* Counters */}
