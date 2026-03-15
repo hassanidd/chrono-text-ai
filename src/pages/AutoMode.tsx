@@ -28,6 +28,7 @@ const logs = [
 
 const AutoMode = () => {
   const [phase, setPhase] = useState<"processing" | "success" | "error">("processing");
+  const [demoStep, setDemoStep] = useState(3);
   const navigate = useNavigate();
 
   useEffect(() => {
