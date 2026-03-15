@@ -5,18 +5,15 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FileText, CheckCircle2, XCircle, RotateCw, Download, ExternalLink } from "lucide-react";
 
-const pipelineSteps = [
-  { label: "Upload", state: "completed" as const },
-  { label: "Extract", state: "completed" as const },
-  { label: "Normalize", state: "completed" as const },
-  { label: "Chunk", state: "current" as const },
-  { label: "Embed Text", state: "pending" as const },
-  { label: "Metadata", state: "pending" as const },
-  { label: "Embedding", state: "pending" as const },
-  { label: "Index", state: "pending" as const },
-];
+const stepLabels = ["Upload", "Extract", "Normalize", "Chunk", "Embed Text", "Metadata", "Embedding", "Index"];
 
-const successSteps = pipelineSteps.map(s => ({ ...s, state: "completed" as const }));
+const buildSteps = (currentStep: number) =>
+  stepLabels.map((label, i) => ({
+    label,
+    state: (i < currentStep ? "completed" : i === currentStep ? "current" : "pending") as "completed" | "current" | "pending",
+  }));
+
+const successSteps = stepLabels.map(label => ({ label, state: "completed" as const }));
 
 const logs = [
   { time: "12:01:03", msg: "File uploaded: Q4-Report.pdf (2.4 MB)", level: "info" },
