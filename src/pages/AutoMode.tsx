@@ -77,7 +77,7 @@ const AutoMode = () => {
               <div className="card-elevated p-5">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-sm font-semibold">Processing</span>
-                  <span className="text-xs text-muted-foreground">Step 4 of 8</span>
+                  <span className="text-xs text-muted-foreground">Step {demoStep + 1} of {stepLabels.length}</span>
                 </div>
                 <div className="w-full bg-muted rounded-full h-2 mb-2">
                   <div className="bg-primary rounded-full h-2 transition-all duration-1000" style={{ width: "50%" }} />
