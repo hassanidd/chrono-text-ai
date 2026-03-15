@@ -210,18 +210,21 @@ const AutoMode = () => {
           </div>
         )}
 
-        {/* Phase switcher for demo */}
-        <div className="mt-8 flex items-center justify-center gap-2">
-          <span className="text-xs text-muted-foreground mr-2">Demo:</span>
-          {(["processing", "success", "error"] as const).map(p => (
+        {/* Demo switcher */}
+        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 flex items-center gap-1 bg-card border rounded-lg p-1 shadow-lg z-50">
+          <span className="text-xs text-muted-foreground px-2">Demo Step:</span>
+          {stepLabels.map((_, i) => (
             <button
-              key={p}
-              onClick={() => setPhase(p)}
-              className={`text-xs px-3 py-1.5 rounded-lg transition-colors ${phase === p ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}
+              key={i}
+              onClick={() => { setDemoStep(i); setPhase("processing"); }}
+              className={`text-[10px] px-2 py-1 rounded transition-colors ${phase === "processing" && demoStep === i ? "bg-primary text-primary-foreground" : "hover:bg-muted text-muted-foreground"}`}
             >
-              {p}
+              {i + 1}
             </button>
           ))}
+          <span className="w-px h-4 bg-border mx-1" />
+          <button onClick={() => setPhase("success")} className={`text-[10px] px-2 py-1 rounded transition-colors ${phase === "success" ? "bg-primary text-primary-foreground" : "hover:bg-muted text-muted-foreground"}`}>✓</button>
+          <button onClick={() => setPhase("error")} className={`text-[10px] px-2 py-1 rounded transition-colors ${phase === "error" ? "bg-primary text-primary-foreground" : "hover:bg-muted text-muted-foreground"}`}>✗</button>
         </div>
       </div>
     </AppLayout>
