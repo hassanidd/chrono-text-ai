@@ -66,7 +66,7 @@ const AutoMode = () => {
 
         {/* Stepper */}
         <div className="card-elevated p-6 mb-6">
-          <StepIndicator steps={phase === "success" ? successSteps : pipelineSteps} />
+          <StepIndicator steps={phase === "success" ? successSteps : buildSteps(demoStep)} />
         </div>
 
         {phase === "processing" && (
