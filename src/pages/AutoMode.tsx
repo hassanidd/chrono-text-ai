@@ -5,18 +5,15 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FileText, CheckCircle2, XCircle, RotateCw, Download, ExternalLink } from "lucide-react";
 
-const pipelineSteps = [
-  { label: "Upload", state: "completed" as const },
-  { label: "Extract", state: "completed" as const },
-  { label: "Normalize", state: "completed" as const },
-  { label: "Chunk", state: "current" as const },
-  { label: "Embed Text", state: "pending" as const },
-  { label: "Metadata", state: "pending" as const },
-  { label: "Embedding", state: "pending" as const },
-  { label: "Index", state: "pending" as const },
-];
+const stepLabels = ["Upload", "Extract", "Normalize", "Chunk", "Embed Text", "Metadata", "Embedding", "Index"];
 
-const successSteps = pipelineSteps.map(s => ({ ...s, state: "completed" as const }));
+const buildSteps = (currentStep: number) =>
+  stepLabels.map((label, i) => ({
+    label,
+    state: (i < currentStep ? "completed" : i === currentStep ? "current" : "pending") as "completed" | "current" | "pending",
+  }));
+
+const successSteps = stepLabels.map(label => ({ label, state: "completed" as const }));
 
 const logs = [
   { time: "12:01:03", msg: "File uploaded: Q4-Report.pdf (2.4 MB)", level: "info" },
@@ -31,6 +28,7 @@ const logs = [
 
 const AutoMode = () => {
   const [phase, setPhase] = useState<"processing" | "success" | "error">("processing");
+  const [demoStep, setDemoStep] = useState(3);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -68,7 +66,7 @@ const AutoMode = () => {
 
         {/* Stepper */}
         <div className="card-elevated p-6 mb-6">
-          <StepIndicator steps={phase === "success" ? successSteps : pipelineSteps} />
+          <StepIndicator steps={phase === "success" ? successSteps : buildSteps(demoStep)} />
         </div>
 
         {phase === "processing" && (
@@ -79,12 +77,12 @@ const AutoMode = () => {
               <div className="card-elevated p-5">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-sm font-semibold">Processing</span>
-                  <span className="text-xs text-muted-foreground">Step 4 of 8</span>
+                  <span className="text-xs text-muted-foreground">Step {demoStep + 1} of {stepLabels.length}</span>
                 </div>
                 <div className="w-full bg-muted rounded-full h-2 mb-2">
-                  <div className="bg-primary rounded-full h-2 transition-all duration-1000" style={{ width: "50%" }} />
+                  <div className="bg-primary rounded-full h-2 transition-all duration-1000" style={{ width: `${((demoStep + 1) / stepLabels.length) * 100}%` }} />
                 </div>
-                <p className="text-xs text-muted-foreground">Chunking content with semantic strategy...</p>
+                <p className="text-xs text-muted-foreground">{stepLabels[demoStep]} in progress...</p>
               </div>
 
               {/* Counters */}
@@ -212,18 +210,21 @@ const AutoMode = () => {
           </div>
         )}
 
-        {/* Phase switcher for demo */}
-        <div className="mt-8 flex items-center justify-center gap-2">
-          <span className="text-xs text-muted-foreground mr-2">Demo:</span>
-          {(["processing", "success", "error"] as const).map(p => (
+        {/* Demo switcher */}
+        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 flex items-center gap-1 bg-card border rounded-lg p-1 shadow-lg z-50">
+          <span className="text-xs text-muted-foreground px-2">Demo Step:</span>
+          {stepLabels.map((_, i) => (
             <button
-              key={p}
-              onClick={() => setPhase(p)}
-              className={`text-xs px-3 py-1.5 rounded-lg transition-colors ${phase === p ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}
+              key={i}
+              onClick={() => { setDemoStep(i); setPhase("processing"); }}
+              className={`text-[10px] px-2 py-1 rounded transition-colors ${phase === "processing" && demoStep === i ? "bg-primary text-primary-foreground" : "hover:bg-muted text-muted-foreground"}`}
             >
-              {p}
+              {i + 1}
             </button>
           ))}
+          <span className="w-px h-4 bg-border mx-1" />
+          <button onClick={() => setPhase("success")} className={`text-[10px] px-2 py-1 rounded transition-colors ${phase === "success" ? "bg-primary text-primary-foreground" : "hover:bg-muted text-muted-foreground"}`}>✓</button>
+          <button onClick={() => setPhase("error")} className={`text-[10px] px-2 py-1 rounded transition-colors ${phase === "error" ? "bg-primary text-primary-foreground" : "hover:bg-muted text-muted-foreground"}`}>✗</button>
         </div>
       </div>
     </AppLayout>
