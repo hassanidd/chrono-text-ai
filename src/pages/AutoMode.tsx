@@ -80,7 +80,7 @@ const AutoMode = () => {
                   <span className="text-xs text-muted-foreground">Step {demoStep + 1} of {stepLabels.length}</span>
                 </div>
                 <div className="w-full bg-muted rounded-full h-2 mb-2">
-                  <div className="bg-primary rounded-full h-2 transition-all duration-1000" style={{ width: "50%" }} />
+                  <div className="bg-primary rounded-full h-2 transition-all duration-1000" style={{ width: `${((demoStep + 1) / stepLabels.length) * 100}%` }} />
                 </div>
                 <p className="text-xs text-muted-foreground">Chunking content with semantic strategy...</p>
               </div>
