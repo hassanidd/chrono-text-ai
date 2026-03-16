@@ -19,7 +19,7 @@ import Settings from "./pages/Settings";
 import Models from "./pages/Models";
 import VectorStore from "./pages/VectorStore";
 import IngestionsList from "./pages/IngestionsList";
-import Playground from "./pages/Playground";
+
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -50,7 +50,7 @@ const App = () => (
           <Route path="/models" element={<Models />} />
           <Route path="/vector-store" element={<VectorStore />} />
           <Route path="/activity" element={<ActivityLogs />} />
-          <Route path="/playground" element={<Playground />} />
+          
           <Route path="/settings" element={<Settings />} />
           <Route element={<PublicLayout />}>
             <Route path="/login" element={<Login />} />
