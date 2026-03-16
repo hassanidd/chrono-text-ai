@@ -50,7 +50,7 @@ const App = () => (
           <Route path="/models" element={<Models />} />
           <Route path="/vector-store" element={<VectorStore />} />
           <Route path="/activity" element={<ActivityLogs />} />
-          <Route path="/playground" element={<Playground />} />
+          
           <Route path="/settings" element={<Settings />} />
           <Route element={<PublicLayout />}>
             <Route path="/login" element={<Login />} />
