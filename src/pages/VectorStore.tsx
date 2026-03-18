@@ -1,107 +1,208 @@
+import { useState } from "react";
 import AppLayout from "@/components/layout/AppLayout";
-import StatusPill from "@/components/shared/StatusPill";
 import MetricCard from "@/components/shared/MetricCard";
-import { HardDrive, Database, Layers, Activity, RefreshCw } from "lucide-react";
+import { HardDrive, Layers, Database, Activity, Plus, RefreshCw, Settings } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import IndexListTable from "@/components/vector-store/IndexListTable";
+import IndexDetailDrawer from "@/components/vector-store/IndexDetailDrawer";
+import CreateIndexDialog from "@/components/vector-store/CreateIndexDialog";
+import ReindexDialog from "@/components/vector-store/ReindexDialog";
+import type { VectorIndex } from "@/components/vector-store/types";
 
-const indexes = [
-  { name: "knowledge-prod", provider: "Pinecone", vectors: 89412, dims: 3072, metric: "Cosine", status: "healthy" as const },
-  { name: "knowledge-staging", provider: "Pinecone", vectors: 12340, dims: 3072, metric: "Cosine", status: "healthy" as const },
-  { name: "legacy-embeddings", provider: "Qdrant", vectors: 45600, dims: 1536, metric: "Cosine", status: "warning" as const },
-];
-
-const recentOps = [
-  { op: "Upsert", index: "knowledge-prod", count: 142, time: "2m ago", status: "success" as const },
-  { op: "Upsert", index: "knowledge-prod", count: 67, time: "1h ago", status: "success" as const },
-  { op: "Delete", index: "knowledge-staging", count: 23, time: "3h ago", status: "success" as const },
-  { op: "Upsert", index: "legacy-embeddings", count: 0, time: "5h ago", status: "error" as const },
-  { op: "Upsert", index: "knowledge-prod", count: 234, time: "1d ago", status: "success" as const },
+const mockIndexes: VectorIndex[] = [
+  {
+    id: "idx-1",
+    name: "chrono_prod_hr",
+    status: "active",
+    provider: "Pinecone",
+    embeddingModel: "text-embedding-3-large",
+    dimensions: 3072,
+    totalVectors: 89412,
+    datasetCount: 5,
+    lastIndexed: "2026-03-18T10:24:00Z",
+    latency: 124,
+    storageSize: "2.4 GB",
+    createdAt: "2025-11-02T08:00:00Z",
+    health: "healthy",
+    chunkMode: "hybrid",
+    distanceMetric: "cosine",
+    indexedChunks: 89412,
+    pendingChunks: 0,
+    failedChunks: 0,
+    linkedDatasets: ["HR Policies", "Employee Handbook", "Benefits Guide", "Onboarding Docs", "Leave Policies"],
+    metadataFields: [
+      { name: "dataset_id", indexed: true },
+      { name: "document_id", indexed: true },
+      { name: "content_type", indexed: true },
+      { name: "language", indexed: true },
+      { name: "tags", indexed: false },
+      { name: "visibility", indexed: true },
+    ],
+  },
+  {
+    id: "idx-2",
+    name: "knowledge_staging",
+    status: "indexing",
+    provider: "Qdrant",
+    embeddingModel: "bge-m3",
+    dimensions: 1024,
+    totalVectors: 12340,
+    datasetCount: 2,
+    lastIndexed: "2026-03-18T09:15:00Z",
+    latency: 89,
+    storageSize: "890 MB",
+    createdAt: "2026-01-15T14:30:00Z",
+    health: "healthy",
+    chunkMode: "raw",
+    distanceMetric: "dot_product",
+    indexedChunks: 10200,
+    pendingChunks: 2140,
+    failedChunks: 0,
+    linkedDatasets: ["Knowledge Base", "FAQ"],
+    metadataFields: [
+      { name: "dataset_id", indexed: true },
+      { name: "document_id", indexed: true },
+      { name: "content_type", indexed: false },
+      { name: "language", indexed: true },
+      { name: "tags", indexed: false },
+      { name: "visibility", indexed: false },
+    ],
+  },
+  {
+    id: "idx-3",
+    name: "legacy_embeddings_v1",
+    status: "failed",
+    provider: "Weaviate",
+    embeddingModel: "text-embedding-3-large",
+    dimensions: 1536,
+    totalVectors: 45600,
+    datasetCount: 8,
+    lastIndexed: "2026-03-17T22:00:00Z",
+    latency: 342,
+    storageSize: "1.1 GB",
+    createdAt: "2025-06-20T10:00:00Z",
+    health: "unhealthy",
+    chunkMode: "summary",
+    distanceMetric: "euclidean",
+    indexedChunks: 42100,
+    pendingChunks: 1200,
+    failedChunks: 2300,
+    linkedDatasets: ["Legal Docs", "Contracts", "Compliance", "Internal Memos", "Reports", "Research", "Archives", "Templates"],
+    metadataFields: [
+      { name: "dataset_id", indexed: true },
+      { name: "document_id", indexed: true },
+      { name: "content_type", indexed: true },
+      { name: "language", indexed: false },
+      { name: "tags", indexed: true },
+      { name: "visibility", indexed: true },
+    ],
+  },
+  {
+    id: "idx-4",
+    name: "support_tickets_prod",
+    status: "active",
+    provider: "Pinecone",
+    embeddingModel: "bge-m3",
+    dimensions: 1024,
+    totalVectors: 234100,
+    datasetCount: 3,
+    lastIndexed: "2026-03-18T11:00:00Z",
+    latency: 67,
+    storageSize: "3.8 GB",
+    createdAt: "2025-09-10T09:00:00Z",
+    health: "healthy",
+    chunkMode: "raw",
+    distanceMetric: "cosine",
+    indexedChunks: 234100,
+    pendingChunks: 0,
+    failedChunks: 0,
+    linkedDatasets: ["Support Tickets", "Customer Feedback", "Bug Reports"],
+    metadataFields: [
+      { name: "dataset_id", indexed: true },
+      { name: "document_id", indexed: true },
+      { name: "content_type", indexed: true },
+      { name: "language", indexed: true },
+      { name: "tags", indexed: true },
+      { name: "visibility", indexed: true },
+    ],
+  },
 ];
 
 const VectorStore = () => {
+  const [selectedIndex, setSelectedIndex] = useState<VectorIndex | null>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [createOpen, setCreateOpen] = useState(false);
+  const [reindexOpen, setReindexOpen] = useState(false);
+  const [reindexTarget, setReindexTarget] = useState<VectorIndex | null>(null);
+
+  const handleViewIndex = (idx: VectorIndex) => {
+    setSelectedIndex(idx);
+    setDrawerOpen(true);
+  };
+
+  const handleReindex = (idx: VectorIndex) => {
+    setReindexTarget(idx);
+    setReindexOpen(true);
+  };
+
+  const totalVectors = mockIndexes.reduce((sum, i) => sum + i.totalVectors, 0);
+  const avgLatency = Math.round(mockIndexes.reduce((sum, i) => sum + i.latency, 0) / mockIndexes.length);
+
   return (
-    <AppLayout title="Vector Store" breadcrumbs={[{ label: "Vector Store" }]}>
+    <AppLayout
+      title="Vector Index Management"
+      breadcrumbs={[{ label: "Vector Store" }, { label: "Index Management" }]}
+      actions={
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={() => { setReindexTarget(null); setReindexOpen(true); }}>
+            <RefreshCw className="w-3.5 h-3.5" />
+            Reindex All
+          </Button>
+          <Button size="sm" onClick={() => setCreateOpen(true)}>
+            <Plus className="w-3.5 h-3.5" />
+            Create Index
+          </Button>
+        </div>
+      }
+    >
       <div className="page-header">
-        <h1 className="page-title">Vector Store</h1>
-        <p className="page-description">Monitor and manage your vector database indexes</p>
+        <h1 className="page-title">Vector Index Management</h1>
+        <p className="page-description">Manage embeddings, indexes, and retrieval performance</p>
       </div>
 
-      <div className="grid grid-cols-4 gap-4 mb-6">
-        <MetricCard icon={HardDrive} label="Total Indexes" value="3" change="2 Pinecone, 1 Qdrant" changeType="neutral" />
-        <MetricCard icon={Layers} label="Total Vectors" value="147,352" change="+4,230 this week" changeType="positive" />
-        <MetricCard icon={Database} label="Storage Used" value="4.2 GB" change="of 10 GB quota" changeType="neutral" />
-        <MetricCard icon={Activity} label="Avg. Query Latency" value="124ms" change="−8ms from last week" changeType="positive" />
+      {/* Metrics */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <MetricCard icon={HardDrive} label="Total Indexes" value={mockIndexes.length} change={`${mockIndexes.filter(i => i.status === "active").length} active`} changeType="positive" delay={0} />
+        <MetricCard icon={Layers} label="Total Vectors" value={totalVectors.toLocaleString()} change="+4,230 this week" changeType="positive" delay={0.05} />
+        <MetricCard icon={Database} label="Storage Used" value="8.1 GB" change="of 20 GB quota" changeType="neutral" delay={0.1} />
+        <MetricCard icon={Activity} label="Avg. Latency" value={`${avgLatency}ms`} change="−12ms from last week" changeType="positive" delay={0.15} />
       </div>
 
-      {/* Indexes */}
-      <div className="card-elevated overflow-hidden mb-6">
-        <div className="flex items-center justify-between p-5 border-b">
-          <h2 className="text-sm font-semibold">Indexes</h2>
-          <button className="flex items-center gap-2 text-xs text-primary font-medium hover:underline">
-            <RefreshCw className="w-3 h-3" /> Refresh Status
-          </button>
-        </div>
-        <table className="w-full">
-          <thead>
-            <tr className="border-b bg-muted/50">
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Index Name</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Provider</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Vectors</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Dimensions</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Metric</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Health</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y">
-            {indexes.map(idx => (
-              <tr key={idx.name} className="hover:bg-muted/30 transition-colors">
-                <td className="px-5 py-3.5 text-sm font-mono font-medium">{idx.name}</td>
-                <td className="px-5 py-3.5 text-sm text-muted-foreground">{idx.provider}</td>
-                <td className="px-5 py-3.5 text-sm font-mono">{idx.vectors.toLocaleString()}</td>
-                <td className="px-5 py-3.5 text-sm font-mono">{idx.dims.toLocaleString()}</td>
-                <td className="px-5 py-3.5 text-sm text-muted-foreground">{idx.metric}</td>
-                <td className="px-5 py-3.5">
-                  <StatusPill status={idx.status === "healthy" ? "success" : "warning"} label={idx.status === "healthy" ? "Healthy" : "Degraded"} />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      {/* Index List */}
+      <IndexListTable
+        indexes={mockIndexes}
+        onView={handleViewIndex}
+        onReindex={handleReindex}
+      />
 
-      {/* Recent Operations */}
-      <div className="card-elevated overflow-hidden">
-        <div className="p-5 border-b">
-          <h2 className="text-sm font-semibold">Recent Operations</h2>
-        </div>
-        <table className="w-full">
-          <thead>
-            <tr className="border-b bg-muted/50">
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Operation</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Index</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Vectors</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Time</th>
-              <th className="text-left text-xs font-medium text-muted-foreground px-5 py-3">Status</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y">
-            {recentOps.map((op, i) => (
-              <tr key={i} className="hover:bg-muted/30 transition-colors">
-                <td className="px-5 py-3.5">
-                  <span className={`text-xs font-medium px-2 py-0.5 rounded ${
-                    op.op === "Upsert" ? "bg-primary/10 text-primary" : "bg-destructive/10 text-destructive"
-                  }`}>{op.op}</span>
-                </td>
-                <td className="px-5 py-3.5 text-sm font-mono text-muted-foreground">{op.index}</td>
-                <td className="px-5 py-3.5 text-sm">{op.count || "—"}</td>
-                <td className="px-5 py-3.5 text-xs text-muted-foreground">{op.time}</td>
-                <td className="px-5 py-3.5">
-                  <StatusPill status={op.status} label={op.status === "success" ? "Success" : "Failed"} />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      {/* Detail Drawer */}
+      <IndexDetailDrawer
+        index={selectedIndex}
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+        onReindex={handleReindex}
+      />
+
+      {/* Create Index Dialog */}
+      <CreateIndexDialog open={createOpen} onOpenChange={setCreateOpen} />
+
+      {/* Reindex Dialog */}
+      <ReindexDialog
+        open={reindexOpen}
+        onOpenChange={setReindexOpen}
+        index={reindexTarget}
+        allIndexes={mockIndexes}
+      />
     </AppLayout>
   );
 };
