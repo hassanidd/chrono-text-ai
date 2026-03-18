@@ -15,10 +15,10 @@ interface Props {
   onReindex: (idx: VectorIndex) => void;
 }
 
-const statusMap = {
-  active: { status: "success" as const, label: "Active" },
-  indexing: { status: "processing" as const, label: "Indexing", pulse: true },
-  failed: { status: "error" as const, label: "Failed" },
+const statusMap: Record<string, { status: "success" | "processing" | "error"; label: string; pulse?: boolean }> = {
+  active: { status: "success", label: "Active" },
+  indexing: { status: "processing", label: "Indexing", pulse: true },
+  failed: { status: "error", label: "Failed" },
 };
 
 const healthColors = {
